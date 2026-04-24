@@ -44,7 +44,7 @@ export default function App() {
   const [compareOpen, setCompareOpen] = useState(false);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
   const [mapVisible, setMapVisible] = useState(false);
-  const [page, setPage] = useState<"vibe" | "finder">("vibe");
+  const [page, setPage] = useState<"vibe" | "finder">("finder");
 
   const handleVibeComplete = ({ venueTypes: vt, scenery: sc, minTables: mt }: VibeFilters) => {
     setVenueTypes(vt);
@@ -113,44 +113,82 @@ export default function App() {
   ].filter(Boolean).length;
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <header className="bg-white border-b border-[#D9CDBF]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center gap-3">
-          <div className="flex-1 min-w-0">
-            <h1 className="font-display text-2xl sm:text-3xl text-blush-700 leading-none">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+          {/* Brand + tabs + desktop controls — all one row */}
+          <div className="flex items-center gap-2 min-w-0">
+            <h1 className="font-display text-xl sm:text-2xl text-blush-700 leading-none shrink-0">
               Something Borrowed
             </h1>
-            <p className="text-[11px] uppercase tracking-widest text-slate-400 mt-1">
-              Hong Kong Wedding Venues
-            </p>
+            <nav className="flex gap-1 ml-2 shrink-0">
+              <button
+                onClick={() => setPage("vibe")}
+                className={`px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition border ${
+                  page === "vibe"
+                    ? "bg-blush-600 text-white border-blush-600"
+                    : "bg-white text-slate-500 border-[#D9CDBF] hover:text-blush-700 hover:border-blush-300"
+                }`}
+              >
+                ✦ Vibe
+              </button>
+              <button
+                onClick={() => setPage("finder")}
+                className={`px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition border ${
+                  page === "finder"
+                    ? "bg-blush-600 text-white border-blush-600"
+                    : "bg-white text-slate-500 border-[#D9CDBF] hover:text-blush-700 hover:border-blush-300"
+                }`}
+              >
+                Finder
+              </button>
+            </nav>
+            {/* Desktop: search + sort + compare pushed right */}
+            {page === "finder" && (
+              <div className="hidden sm:flex items-center gap-2 ml-auto">
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search venues…"
+                  className="w-44 border border-slate-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blush-300"
+                />
+                <select
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value as SortKey)}
+                  className="border border-[#D9CDBF] rounded-lg px-3 py-1.5 text-sm bg-white shrink-0"
+                >
+                  <option value="rating">Top rated</option>
+                  <option value="price-asc">Price: low → high</option>
+                  <option value="price-desc">Price: high → low</option>
+                  <option value="capacity">Largest first</option>
+                </select>
+                <button
+                  onClick={() => setCompareOpen(true)}
+                  disabled={compareIds.length === 0}
+                  className="shrink-0 px-3 py-1.5 rounded-lg bg-blush-600 text-white text-sm font-medium disabled:bg-slate-300 hover:bg-blush-700 transition"
+                >
+                  Compare ({compareIds.length})
+                </button>
+              </div>
+            )}
           </div>
-          <div className="flex flex-1 sm:flex-none items-center gap-2 min-w-0">
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search venues…"
-              className="flex-1 sm:w-52 min-w-0 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blush-300"
-            />
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value as SortKey)}
-              className="hidden sm:block border border-[#D9CDBF] rounded-lg px-3 py-2 text-sm bg-white shrink-0"
-            >
-              <option value="rating">Top rated</option>
-              <option value="price-asc">Price: low → high</option>
-              <option value="price-desc">Price: high → low</option>
-              <option value="capacity">Largest first</option>
-            </select>
-            <button
-              onClick={() => setCompareOpen(true)}
-              disabled={compareIds.length === 0}
-              className="shrink-0 px-3 sm:px-4 py-2 rounded-lg bg-blush-600 text-white text-sm font-medium disabled:bg-slate-300 hover:bg-blush-700 transition"
-            >
-              Compare ({compareIds.length})
-            </button>
-          </div>
+          {/* Mobile: search bar below brand row (finder only) */}
+          {page === "finder" && (
+            <div className="sm:hidden flex gap-2 mt-2">
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search venues…"
+                className="flex-1 min-w-0 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blush-300"
+              />
+            </div>
+          )}
         </div>
       </header>
+
+      {page === "vibe" ? (
+        <VibePicker onComplete={handleVibeComplete} />
+      ) : (<>
 
       {/* Mobile: Filters | Map action bar */}
       <div className="lg:hidden sticky top-0 z-20 bg-white border-b border-[#D9CDBF] flex">
@@ -419,6 +457,8 @@ export default function App() {
       <footer className="border-t border-[#D9CDBF] bg-cream/60 py-4 text-center text-xs text-slate-500">
         Something Borrowed · Demo data · {new Date().getFullYear()}
       </footer>
+
+      </>)}
     </div>
   );
 }
@@ -665,31 +705,35 @@ function VenueDetails({
           </div>
 
           {/* ── Section nav ── */}
-          <div className="border-b border-[#D9CDBF] px-2 sm:px-5 flex items-center shrink-0 overflow-x-auto overflow-y-hidden">
-            {[
-              { label: "About", ref: aboutRef },
-              { label: "Transport", ref: transportRef },
-              { label: `Reviews (${reviewCount})`, ref: reviewsRef },
-              { label: `Photos (${venue.images.length})`, ref: photosRef },
-            ].map(({ label, ref }) => (
-              <button
-                key={label}
-                onClick={() => scrollTo(ref)}
-                className="px-4 py-3 text-sm font-medium text-slate-600 hover:text-blush-700 border-b-2 border-transparent hover:border-blush-500 transition -mb-px whitespace-nowrap"
-              >
-                {label}
-              </button>
-            ))}
-            <div className="ml-auto pl-3 shrink-0 py-1.5">
+          <div className="border-b border-[#D9CDBF] flex items-center shrink-0">
+            {/* Tabs — scrollable on small screens */}
+            <div className="flex overflow-x-auto overflow-y-hidden flex-1 px-2 sm:px-5">
+              {[
+                { label: "About", ref: aboutRef },
+                { label: "Transport", ref: transportRef },
+                { label: `Reviews (${reviewCount})`, ref: reviewsRef },
+                { label: `Photos (${venue.images.length})`, ref: photosRef },
+              ].map(({ label, ref }) => (
+                <button
+                  key={label}
+                  onClick={() => scrollTo(ref)}
+                  className="px-4 py-3 text-sm font-medium text-slate-600 hover:text-blush-700 border-b-2 border-transparent hover:border-blush-500 transition -mb-px whitespace-nowrap shrink-0"
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            {/* Compare — always pinned right, never scrolls away */}
+            <div className="shrink-0 px-3 py-2 border-l border-slate-100">
               <button
                 onClick={() => onCompare(venue.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition border whitespace-nowrap ${
                   compared
                     ? "bg-blush-600 text-white border-blush-600 hover:bg-blush-700"
-                    : "bg-cream text-blush-700 border-blush-300 hover:bg-blush-50"
+                    : "bg-white text-blush-700 border-blush-300 hover:bg-blush-50"
                 }`}
               >
-                {compared ? "✓ In comparison" : "+ Compare"}
+                {compared ? "✓" : "+"}
               </button>
             </div>
           </div>
