@@ -1443,9 +1443,49 @@ export const venues: Venue[] = [
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free"],
     images: [
       {
-        url: "https://www.bespoke-wedding.com/sites/default/files/crowne_plaza_kowloon_east.jpg",
-        kind: "exterior",
-        caption: "The Royal Garden Kowloon East (formerly Crowne Plaza)",
+        url: "https://www.rghk.com.hk/uploads/images/1L0A7250--230213180327.jpg",
+        kind: "interior",
+        caption: "Outdoor rooftop ceremony — leafy floral arches with harbour views",
+      },
+      {
+        url: "https://www.rghk.com.hk/uploads/images/wedding-banner-01-170302094953.jpg",
+        kind: "interior",
+        caption: "Grand ballroom wedding banquet with white draping backdrop",
+      },
+      {
+        url: "https://www.rghk.com.hk/uploads/images/gallery-01-170731034410.jpg",
+        kind: "interior",
+        caption: "Ballroom with ornate cloud-ceiling pendant lights — daytime elegance",
+      },
+      {
+        url: "https://www.rghk.com.hk/uploads/images/gallery-02-170731034410.jpg",
+        kind: "interior",
+        caption: "Ballroom with purple ambient lighting for evening banquets",
+      },
+      {
+        url: "https://www.rghk.com.hk/uploads/images/02-230213180123.jpg",
+        kind: "interior",
+        caption: "Outdoor terrace — wedding cake and circular floral arch with city backdrop",
+      },
+      {
+        url: "https://www.rghk.com.hk/uploads/images/03-230213180123.jpg",
+        kind: "interior",
+        caption: "Outdoor ceremony aisle — floral chair corsages, teal carpet, harbour view",
+      },
+      {
+        url: "https://www.rghk.com.hk/uploads/images/gallery-03-170731034410.jpg",
+        kind: "facility",
+        caption: "Table setting — burgundy napkins, wine glasses and rose centrepiece",
+      },
+      {
+        url: "https://www.rghk.com.hk/uploads/images/gallery-04-170731034410.jpg",
+        kind: "facility",
+        caption: "Round table with burgundy hydrangea centrepiece and crystal accents",
+      },
+      {
+        url: "https://www.rghk.com.hk/uploads/images/gallery-05-170731034410.jpg",
+        kind: "facility",
+        caption: "Vibrant hydrangea centrepiece with candlelight and lavender ambient lighting",
       },
     ],
     blurb:
