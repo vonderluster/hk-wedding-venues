@@ -4,22 +4,26 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Warm parchment used for page-level structure (header, sidebar shells)
+        cream: "#F8F3EC",
+        // Accent palette: deep espresso brown → warm tan highlights
+        // (replaces the old pink/fuchsia blush scale)
         blush: {
-          50: "#fdf5f6",
-          100: "#fbe8eb",
-          200: "#f5cfd6",
-          300: "#eda8b4",
-          400: "#e07a8c",
-          500: "#d15670",
-          600: "#b93d59",
-          700: "#962f48",
-          800: "#7a2a3f",
-          900: "#66273a",
+          50:  "#FBF7F3",
+          100: "#F4ECE3",
+          200: "#E8D6C4",
+          300: "#D4B898",
+          400: "#BA9468",
+          500: "#9A7248",
+          600: "#7A5232",   // primary CTA — deep warm brown
+          700: "#623F24",
+          800: "#4A2E16",
+          900: "#30200C",
         },
       },
       fontFamily: {
-        display: ['"Playfair Display"', "Georgia", "serif"],
-        sans: ['"Inter"', "system-ui", "sans-serif"],
+        display: ['"Cactus Classical Serif"', "Georgia", "serif"],
+        sans:    ['"Montserrat"', "system-ui", "sans-serif"],
       },
     },
   },

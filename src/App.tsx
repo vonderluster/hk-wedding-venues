@@ -1,11 +1,13 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   venues as allVenues,
-  SETTINGS,
+  VENUE_TYPES,
+  SCENERY,
   FACILITIES,
   DISTRICTS,
   GUESTS_PER_TABLE,
-  type Setting,
+  type VenueType,
+  type Scenery,
   type Facility,
   type District,
   type Venue,
@@ -13,6 +15,9 @@ import {
 import VenueCard, { formatPrice } from "./components/VenueCard";
 import MapView from "./components/MapView";
 import CompareDrawer from "./components/CompareDrawer";
+import UserReviews from "./components/UserReviews";
+import AIRecommender from "./components/AIRecommender";
+import VibePicker, { type VibeFilters } from "./components/VibePicker";
 import {
   forumReviewsByVenueId,
   SOURCE_LABELS,
@@ -28,7 +33,8 @@ type SortKey = "rating" | "price-asc" | "price-desc" | "capacity";
 export default function App() {
   const [priceMax, setPriceMax] = useState(PRICE_MAX);
   const [minTables, setMinTables] = useState(0);
-  const [settings, setSettings] = useState<Setting[]>([]);
+  const [venueTypes, setVenueTypes] = useState<VenueType[]>([]);
+  const [scenery, setScenery] = useState<Scenery[]>([]);
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [districts, setDistricts] = useState<District[]>([]);
   const [search, setSearch] = useState("");
@@ -36,6 +42,16 @@ export default function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [compareOpen, setCompareOpen] = useState(false);
+  const [filterSheetOpen, setFilterSheetOpen] = useState(false);
+  const [mapVisible, setMapVisible] = useState(false);
+  const [page, setPage] = useState<"vibe" | "finder">("vibe");
+
+  const handleVibeComplete = ({ venueTypes: vt, scenery: sc, minTables: mt }: VibeFilters) => {
+    setVenueTypes(vt);
+    setScenery(sc);
+    setMinTables(mt);
+    setPage("finder");
+  };
 
   const toggle = <T,>(list: T[], value: T, set: (v: T[]) => void) => {
     set(list.includes(value) ? list.filter((x) => x !== value) : [...list, value]);
@@ -48,7 +64,9 @@ export default function App() {
         return false;
       if (v.pricePerHead[1] > 0 && v.pricePerHead[0] > priceMax) return false;
       if (v.tables[1] > 0 && v.tables[1] < minTables) return false;
-      if (settings.length && !settings.some((s) => v.settings.includes(s)))
+      if (venueTypes.length && !venueTypes.some((t) => v.venueTypes.includes(t)))
+        return false;
+      if (scenery.length && !scenery.some((s) => v.scenery.includes(s)))
         return false;
       if (facilities.length && !facilities.every((f) => v.facilities.includes(f)))
         return false;
@@ -70,7 +88,7 @@ export default function App() {
       }
     });
     return result;
-  }, [priceMax, minTables, settings, facilities, districts, search, sort]);
+  }, [priceMax, minTables, venueTypes, scenery, facilities, districts, search, sort]);
 
   const selected = allVenues.find((v) => v.id === selectedId) ?? null;
   const compared = allVenues.filter((v) => compareIds.includes(v.id));
@@ -78,45 +96,55 @@ export default function App() {
   const resetFilters = () => {
     setPriceMax(PRICE_MAX);
     setMinTables(0);
-    setSettings([]);
+    setVenueTypes([]);
+    setScenery([]);
     setFacilities([]);
     setDistricts([]);
     setSearch("");
   };
 
+  const activeFilterCount = [
+    priceMax < PRICE_MAX,
+    minTables > 0,
+    venueTypes.length > 0,
+    scenery.length > 0,
+    facilities.length > 0,
+    districts.length > 0,
+  ].filter(Boolean).length;
+
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
-          <div>
-            <h1 className="font-display text-2xl font-bold text-blush-700 leading-none">
+      <header className="bg-white border-b border-[#D9CDBF]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center gap-3">
+          <div className="flex-1 min-w-0">
+            <h1 className="font-display text-2xl sm:text-3xl text-blush-700 leading-none">
               Something Borrowed
             </h1>
-            <p className="text-xs text-slate-500 mt-1">
-              Hong Kong wedding venues, compared.
+            <p className="text-[11px] uppercase tracking-widest text-slate-400 mt-1">
+              Hong Kong Wedding Venues
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-1 sm:flex-none items-center gap-2 min-w-0">
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search venues, districts…"
-              className="border border-slate-200 rounded-lg px-3 py-2 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-blush-300"
+              placeholder="Search venues…"
+              className="flex-1 sm:w-52 min-w-0 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blush-300"
             />
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as SortKey)}
-              className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white"
+              className="hidden sm:block border border-[#D9CDBF] rounded-lg px-3 py-2 text-sm bg-white shrink-0"
             >
               <option value="rating">Top rated</option>
-              <option value="price-asc">Price: low to high</option>
-              <option value="price-desc">Price: high to low</option>
-              <option value="capacity">Largest capacity</option>
+              <option value="price-asc">Price: low → high</option>
+              <option value="price-desc">Price: high → low</option>
+              <option value="capacity">Largest first</option>
             </select>
             <button
               onClick={() => setCompareOpen(true)}
               disabled={compareIds.length === 0}
-              className="px-4 py-2 rounded-lg bg-blush-600 text-white text-sm font-medium disabled:bg-slate-300 hover:bg-blush-700 transition"
+              className="shrink-0 px-3 sm:px-4 py-2 rounded-lg bg-blush-600 text-white text-sm font-medium disabled:bg-slate-300 hover:bg-blush-700 transition"
             >
               Compare ({compareIds.length})
             </button>
@@ -124,21 +152,44 @@ export default function App() {
         </div>
       </header>
 
-      <div className="flex-1 max-w-7xl w-full mx-auto px-6 py-6 grid grid-cols-12 gap-6">
-        {/* Filters sidebar */}
-        <aside className="col-span-12 lg:col-span-3 space-y-5">
-          <div className="bg-white rounded-2xl border border-slate-200 p-4">
+      {/* Mobile: Filters | Map action bar */}
+      <div className="lg:hidden sticky top-0 z-20 bg-white border-b border-[#D9CDBF] flex">
+        <button
+          onClick={() => setFilterSheetOpen(true)}
+          className="flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium text-slate-700 border-r border-[#D9CDBF] active:bg-blush-50"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 4h18M7 8h10M11 12h2" />
+          </svg>
+          Filters
+          {activeFilterCount > 0 && (
+            <span className="bg-blush-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center leading-none">
+              {activeFilterCount}
+            </span>
+          )}
+        </button>
+        <button
+          onClick={() => setMapVisible((v) => !v)}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium active:bg-slate-50 ${mapVisible ? "text-blush-700" : "text-slate-700"}`}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 13l4.553 2.276A1 1 0 0021 21.382V10.618a1 1 0 00-.553-.894L15 7m0 13V7m0 0L9 7" />
+          </svg>
+          {mapVisible ? "Hide map" : "Map"}
+        </button>
+      </div>
+
+      <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-4 sm:py-6 grid grid-cols-12 gap-4 sm:gap-6">
+        {/* Filters sidebar — desktop only */}
+        <aside className="hidden lg:block lg:col-span-3 space-y-5">
+          <div className="bg-cream rounded-2xl border border-[#D9CDBF] p-4">
             <div className="flex items-center justify-between mb-3">
-              <h2 className="font-display font-semibold text-slate-800">
-                Filters
-              </h2>
-              <button
-                onClick={resetFilters}
-                className="text-xs text-blush-600 hover:underline"
-              >
+              <h2 className="font-display text-slate-800">Filters</h2>
+              <button onClick={resetFilters} className="text-xs text-blush-600 hover:underline">
                 Reset
               </button>
             </div>
+            <div>
 
             <FilterSection title={`Max price per head: HK$${priceMax.toLocaleString()}`}>
               <input
@@ -166,11 +217,19 @@ export default function App() {
               />
             </FilterSection>
 
-            <FilterSection title="Setting & views">
+            <FilterSection title="Venue type">
               <CheckboxGroup
-                items={SETTINGS}
-                selected={settings}
-                onToggle={(v) => toggle(settings, v, setSettings)}
+                items={VENUE_TYPES}
+                selected={venueTypes}
+                onToggle={(v) => toggle(venueTypes, v, setVenueTypes)}
+              />
+            </FilterSection>
+
+            <FilterSection title="Scenery">
+              <CheckboxGroup
+                items={SCENERY}
+                selected={scenery}
+                onToggle={(v) => toggle(scenery, v, setScenery)}
               />
             </FilterSection>
 
@@ -189,12 +248,15 @@ export default function App() {
                 onToggle={(v) => toggle(districts, v, setDistricts)}
               />
             </FilterSection>
+            </div>{/* end collapsible */}
           </div>
         </aside>
 
         {/* Main content */}
         <main className="col-span-12 lg:col-span-9 space-y-6">
-          <div className="h-[360px] bg-white rounded-2xl border border-slate-200 overflow-hidden">
+          <AIRecommender venues={allVenues} onSelect={setSelectedId} />
+
+          <div className={`${mapVisible ? "block" : "hidden"} lg:block h-[280px] lg:h-[360px] bg-white rounded-2xl border border-[#D9CDBF] overflow-hidden`}>
             <MapView
               venues={filtered}
               selectedId={selectedId}
@@ -219,17 +281,17 @@ export default function App() {
                 selected={v.id === selectedId}
                 compared={compareIds.includes(v.id)}
                 onSelect={setSelectedId}
-                onCompare={(id) =>
+                onCompare={(id) => {
+                  const isAdding = !compareIds.includes(id);
                   setCompareIds((prev) =>
-                    prev.includes(id)
-                      ? prev.filter((x) => x !== id)
-                      : [...prev, id],
-                  )
-                }
+                    prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+                  );
+                  if (isAdding && compareIds.length >= 1) setCompareOpen(true);
+                }}
               />
             ))}
             {filtered.length === 0 && (
-              <div className="col-span-full text-center p-10 bg-white rounded-2xl border border-slate-200">
+              <div className="col-span-full text-center p-10 bg-white rounded-2xl border border-[#D9CDBF]">
                 <p className="text-slate-600">No venues match these filters.</p>
                 <button
                   onClick={resetFilters}
@@ -247,12 +309,16 @@ export default function App() {
         <VenueDetails
           venue={selected}
           compared={compareIds.includes(selected.id)}
-          onCompare={(id) =>
+          onCompare={(id) => {
+            const isAdding = !compareIds.includes(id);
             setCompareIds((prev) =>
               prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
-            )
-          }
+            );
+            if (isAdding && compareIds.length >= 1) setCompareOpen(true);
+          }}
           onClose={() => setSelectedId(null)}
+          onFilterByVenueType={(t) => { setVenueTypes([t]); setSelectedId(null); }}
+          onFilterByScenery={(s) => { setScenery([s]); setSelectedId(null); }}
         />
       )}
 
@@ -265,7 +331,92 @@ export default function App() {
         }
       />
 
-      <footer className="border-t border-slate-200 bg-white/60 py-4 text-center text-xs text-slate-500">
+      {/* Mobile filter bottom sheet */}
+      {filterSheetOpen && (
+        <div className="lg:hidden fixed inset-0 z-[1003] flex flex-col justify-end">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setFilterSheetOpen(false)} />
+          <div className="relative bg-white rounded-t-2xl max-h-[85vh] flex flex-col shadow-2xl">
+            {/* Handle */}
+            <div className="flex justify-center pt-3 pb-1 shrink-0">
+              <div className="w-10 h-1 rounded-full bg-slate-300" />
+            </div>
+            {/* Sheet header */}
+            <div className="flex items-center justify-between px-5 py-3 border-b border-[#D9CDBF] shrink-0">
+              <span className="font-display text-slate-900">
+                Filters{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}
+              </span>
+              <div className="flex items-center gap-4">
+                <button onClick={resetFilters} className="text-sm text-blush-600 hover:underline">
+                  Reset
+                </button>
+                <button
+                  onClick={() => setFilterSheetOpen(false)}
+                  className="px-4 py-1.5 bg-blush-600 text-white text-sm font-medium rounded-lg hover:bg-blush-700 transition"
+                >
+                  Done
+                </button>
+              </div>
+            </div>
+            {/* Sheet content */}
+            <div className="overflow-auto flex-1 px-5 py-4 space-y-1">
+              <FilterSection title={`Max price per head: HK$${priceMax.toLocaleString()}`}>
+                <input
+                  type="range"
+                  min={500}
+                  max={PRICE_MAX}
+                  step={100}
+                  value={priceMax}
+                  onChange={(e) => setPriceMax(Number(e.target.value))}
+                  className="w-full accent-blush-600"
+                />
+              </FilterSection>
+              <FilterSection
+                title={`Min tables: ${minTables} (${minTables * GUESTS_PER_TABLE} guests)`}
+              >
+                <input
+                  type="range"
+                  min={0}
+                  max={60}
+                  step={5}
+                  value={minTables}
+                  onChange={(e) => setMinTables(Number(e.target.value))}
+                  className="w-full accent-blush-600"
+                />
+              </FilterSection>
+              <FilterSection title="Venue type">
+                <CheckboxGroup
+                  items={VENUE_TYPES}
+                  selected={venueTypes}
+                  onToggle={(v) => toggle(venueTypes, v, setVenueTypes)}
+                />
+              </FilterSection>
+              <FilterSection title="Scenery">
+                <CheckboxGroup
+                  items={SCENERY}
+                  selected={scenery}
+                  onToggle={(v) => toggle(scenery, v, setScenery)}
+                />
+              </FilterSection>
+              <FilterSection title="Facilities">
+                <CheckboxGroup
+                  items={FACILITIES}
+                  selected={facilities}
+                  onToggle={(v) => toggle(facilities, v, setFacilities)}
+                />
+              </FilterSection>
+              <FilterSection title="HK district">
+                <CheckboxGroup
+                  items={DISTRICTS}
+                  selected={districts}
+                  onToggle={(v) => toggle(districts, v, setDistricts)}
+                />
+              </FilterSection>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <footer className="border-t border-[#D9CDBF] bg-cream/60 py-4 text-center text-xs text-slate-500">
         Something Borrowed · Demo data · {new Date().getFullYear()}
       </footer>
     </div>
@@ -309,7 +460,7 @@ function CheckboxGroup<T extends string>({
             className={`text-xs px-2.5 py-1 rounded-full border transition ${
               active
                 ? "bg-blush-600 text-white border-blush-600"
-                : "bg-white text-slate-700 border-slate-200 hover:border-blush-300"
+                : "bg-cream text-[#5C4A35] border-[#D9CDBF] hover:border-blush-400"
             }`}
           >
             {item}
@@ -325,126 +476,383 @@ function VenueDetails({
   compared,
   onCompare,
   onClose,
+  onFilterByVenueType,
+  onFilterByScenery,
 }: {
   venue: Venue;
   compared: boolean;
   onCompare: (id: string) => void;
   onClose: () => void;
+  onFilterByVenueType: (t: VenueType) => void;
+  onFilterByScenery: (s: Scenery) => void;
 }) {
-  const hero = venue.images[0];
+  const [lightbox, setLightbox] = useState<{ url: string; caption: string } | null>(null);
+  const [ugcCount, setUgcCount] = useState(0);
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const transportRef = useRef<HTMLDivElement>(null);
+  const reviewsRef = useRef<HTMLDivElement>(null);
+  const photosRef = useRef<HTMLDivElement>(null);
+
+  const scrollTo = (ref: React.RefObject<HTMLDivElement | null>) =>
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  const heroImg = venue.images[0];
+  const thumbImgs = venue.images.slice(1, 5);
+  const forumCount = forumReviewsByVenueId[venue.id]?.reviews.length ?? venue.reviews.length;
+  const reviewCount = forumCount + ugcCount;
+
+  const capacityLabel =
+    venue.tables[1] === 0
+      ? "Ceremony-only"
+      : venue.tables[0] > 1
+      ? `${venue.tables[0]}–${venue.tables[1]} tables · up to ${venue.tables[1] * GUESTS_PER_TABLE} guests`
+      : `Up to ${venue.tables[1]} tables · up to ${venue.tables[1] * GUESTS_PER_TABLE} guests`;
+
   return (
-    <div className="fixed inset-0 z-[1001] bg-black/50 flex items-end sm:items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden flex flex-col">
-        <div
-          className="h-56 w-full bg-cover bg-center bg-slate-200 relative"
-          style={{
-            backgroundImage: hero ? `url(${hero.url})` : undefined,
-          }}
-        >
-          <button
-            onClick={onClose}
-            className="absolute top-3 right-3 bg-white/90 rounded-full w-8 h-8 flex items-center justify-center text-slate-700 hover:bg-white"
-          >
-            ×
-          </button>
-        </div>
-        <div className="p-6 overflow-auto space-y-4">
-          <div className="flex items-start justify-between">
-            <div>
-              <h2 className="font-display text-2xl font-bold text-slate-900">
-                {venue.name}
-              </h2>
-              <p className="text-sm text-slate-500">
-                {venue.district} · {venue.address}
-              </p>
-            </div>
-            <div className="text-right">
-              <div className="text-blush-700 font-semibold">
-                ★ {venue.rating}
-              </div>
-              <div className="text-xs text-slate-400">
-                {venue.reviewCount} reviews
-              </div>
-            </div>
-          </div>
-          <p className="text-slate-700">{venue.blurb}</p>
-          {venue.hkwvdbUrl && (
-            <p className="text-xs text-slate-400">
-              Price, capacity & facilities sourced from{" "}
-              <a
-                href={venue.hkwvdbUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blush-600 hover:underline"
+    <>
+      <div className="fixed inset-0 z-[1001] bg-black/50 flex items-end sm:items-center justify-center p-0 sm:p-3">
+        <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl w-full sm:max-w-6xl max-h-[92vh] sm:max-h-[94vh] overflow-hidden flex flex-col">
+
+          {/* ── Top: photo grid + info card ── */}
+          {/* Container has no fixed height — photo grid is 400px, info card is auto */}
+          <div className="flex flex-col sm:flex-row shrink-0 relative">
+
+            {/* Mobile: single hero image */}
+            <div
+              className="sm:hidden h-52 bg-cover bg-center bg-slate-200 cursor-zoom-in shrink-0"
+              style={{ backgroundImage: heroImg ? `url(${heroImg.url})` : undefined }}
+              onClick={() => heroImg && setLightbox(heroImg)}
+            />
+
+            {/* Desktop: photo grid — fixed 400px, aligned to top */}
+            <div className="hidden sm:block flex-1 overflow-hidden rounded-tl-2xl relative self-start h-[400px]">
+              <div
+                className="grid h-full gap-0.5"
+                style={{ gridTemplateColumns: "2fr 1fr 1fr", gridTemplateRows: "1fr 1fr" }}
               >
-                hkwvdb.com ↗
-              </a>
-            </p>
-          )}
-          <div className="grid grid-cols-2 gap-3 text-sm">
-            <Info label="Price" value={formatPrice(venue.pricePerHead)} />
-            <Info
-              label="Capacity"
-              value={
-                venue.tables[1] === 0
-                  ? "Ceremony-only"
-                  : `${venue.tables[0]}–${venue.tables[1]} tables (up to ${
-                      venue.tables[1] * GUESTS_PER_TABLE
-                    } guests)`
-              }
-            />
-            <Info
-              label="Dietary options"
-              value={venue.dietaryOptions.join(", ")}
-            />
-            <Info label="Setting" value={venue.settings.join(", ")} />
-            <Info label="Facilities" value={venue.facilities.join(", ")} />
-          </div>
-          <ForumReviewsSection venueId={venue.id} fallback={venue.reviews} />
-          {venue.images.length > 1 && (
-            <div>
-              <h3 className="font-semibold text-slate-800 mb-2">Photos</h3>
-              <Gallery venue={venue} />
+                {/* Hero — spans both rows */}
+                <div
+                  className="row-span-2 bg-cover bg-center bg-slate-200 cursor-zoom-in"
+                  style={{ backgroundImage: heroImg ? `url(${heroImg.url})` : undefined }}
+                  onClick={() => heroImg && setLightbox(heroImg)}
+                />
+                {/* Up to 4 thumbnails */}
+                {Array.from({ length: 4 }).map((_, i) => {
+                  const img = thumbImgs[i];
+                  return (
+                    <div
+                      key={i}
+                      className={`bg-cover bg-center bg-slate-100 ${img ? "cursor-zoom-in" : ""}`}
+                      style={{ backgroundImage: img ? `url(${img.url})` : undefined }}
+                      onClick={() => img && setLightbox(img)}
+                    />
+                  );
+                })}
+              </div>
+              {/* "View all photos" button */}
+              <button
+                onClick={() => scrollTo(photosRef)}
+                className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 text-xs font-medium text-slate-800 hover:bg-white shadow-sm transition"
+              >
+                View all {venue.images.length} photos ↓
+              </button>
+            </div>{/* end desktop photo grid */}
+
+            {/* Info card — auto height, no scroll */}
+            <div className="w-full sm:w-80 shrink-0 border-t sm:border-t-0 sm:border-l border-[#D9CDBF] flex flex-col p-4 sm:p-5 gap-3 sm:gap-4 sm:rounded-tr-2xl">
+              <div>
+                <h2 className="font-display text-xl text-slate-900 leading-tight">
+                  {venue.name}
+                </h2>
+                <p className="text-xs text-slate-500 mt-1">{venue.district} · {venue.address}</p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-blush-700 font-semibold text-lg">★ {venue.rating}</span>
+                <span className="text-sm text-slate-500">{venue.reviewCount.toLocaleString()} reviews</span>
+              </div>
+
+              <div className="space-y-2.5 text-sm text-slate-700">
+                <div className="flex gap-2.5 items-start">
+                  <span className="shrink-0 text-slate-400">💰</span>
+                  <span>{formatPrice(venue.pricePerHead)}</span>
+                </div>
+                <div className="flex gap-2.5 items-start">
+                  <span className="shrink-0 text-slate-400">🪑</span>
+                  <span>{capacityLabel}</span>
+                </div>
+                <div className="flex gap-2 items-start flex-wrap">
+                  <span className="shrink-0 text-slate-400 mt-0.5">🏷</span>
+                  {venue.venueTypes.map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => { onFilterByVenueType(t); onClose(); }}
+                      className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 hover:bg-blush-100 hover:text-blush-700 transition"
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+                {venue.scenery.length > 0 && (
+                  <div className="flex gap-2 items-start flex-wrap">
+                    <span className="shrink-0 text-slate-400 mt-0.5">🌿</span>
+                    {venue.scenery.map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => { onFilterByScenery(s); onClose(); }}
+                        className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 hover:bg-blush-100 hover:text-blush-700 transition"
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {venue.socialMedia && (
+                <div className="flex gap-3 items-center">
+                  {venue.socialMedia.instagram && (
+                    <a
+                      href={venue.socialMedia.instagram}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Instagram"
+                      className="text-slate-400 hover:text-pink-500 transition"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                      </svg>
+                    </a>
+                  )}
+                  {venue.socialMedia.facebook && (
+                    <a
+                      href={venue.socialMedia.facebook}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Facebook"
+                      className="text-slate-400 hover:text-blue-600 transition"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              )}
+
+              <div className="mt-auto space-y-2">
+                {venue.enquiryUrl && (
+                  <a
+                    href={venue.enquiryUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block w-full py-2.5 rounded-lg font-medium text-sm text-center bg-blush-600 text-white hover:bg-blush-700 transition"
+                  >
+                    Enquire Now ↗
+                  </a>
+                )}
+              </div>
             </div>
-          )}
-          <button
-            onClick={() => onCompare(venue.id)}
-            className={`w-full py-2.5 rounded-lg font-medium text-sm transition ${
-              compared
-                ? "bg-blush-600 text-white hover:bg-blush-700"
-                : "bg-white border border-blush-600 text-blush-700 hover:bg-blush-50"
-            }`}
-          >
-            {compared ? "✓ In comparison" : "+ Add to comparison"}
-          </button>
+
+            {/* Close button */}
+            <button
+              onClick={onClose}
+              className="absolute top-3 right-3 sm:left-3 sm:right-auto bg-white/90 rounded-full w-8 h-8 flex items-center justify-center text-slate-700 hover:bg-white shadow z-10"
+              aria-label="Close"
+            >
+              ×
+            </button>
+          </div>
+
+          {/* ── Section nav ── */}
+          <div className="border-b border-[#D9CDBF] px-2 sm:px-5 flex items-center shrink-0 overflow-x-auto overflow-y-hidden">
+            {[
+              { label: "About", ref: aboutRef },
+              { label: "Transport", ref: transportRef },
+              { label: `Reviews (${reviewCount})`, ref: reviewsRef },
+              { label: `Photos (${venue.images.length})`, ref: photosRef },
+            ].map(({ label, ref }) => (
+              <button
+                key={label}
+                onClick={() => scrollTo(ref)}
+                className="px-4 py-3 text-sm font-medium text-slate-600 hover:text-blush-700 border-b-2 border-transparent hover:border-blush-500 transition -mb-px whitespace-nowrap"
+              >
+                {label}
+              </button>
+            ))}
+            <div className="ml-auto pl-3 shrink-0 py-1.5">
+              <button
+                onClick={() => onCompare(venue.id)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition border whitespace-nowrap ${
+                  compared
+                    ? "bg-blush-600 text-white border-blush-600 hover:bg-blush-700"
+                    : "bg-cream text-blush-700 border-blush-300 hover:bg-blush-50"
+                }`}
+              >
+                {compared ? "✓ In comparison" : "+ Compare"}
+              </button>
+            </div>
+          </div>
+
+          {/* ── Scrollable content ── */}
+          <div className="flex-1 overflow-auto scrollbar-hide">
+            {/* About */}
+            <div ref={aboutRef} className="p-4 sm:p-6 space-y-4 border-b border-[#E0D4C4]">
+              <h3 className="font-display text-lg font-semibold text-slate-900">About</h3>
+              <Blurb text={venue.blurb} sourceUrl={venue.hkwvdbUrl} className="text-slate-700" />
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <Info label="Price per head" value={formatPrice(venue.pricePerHead)} />
+                <Info label="Capacity" value={capacityLabel} />
+                <Info label="Venue type" value={venue.venueTypes.join(", ")} />
+                {venue.scenery.length > 0 && (
+                  <Info label="Scenery" value={venue.scenery.join(", ")} />
+                )}
+                <Info label="Dietary options" value={venue.dietaryOptions.join(", ")} />
+                <Info label="Facilities" value={venue.facilities.join(", ")} />
+              </div>
+            </div>
+
+            {/* Transport */}
+            <div ref={transportRef} className="p-4 sm:p-6 border-b border-[#E0D4C4]">
+              <h3 className="font-display text-lg font-semibold text-slate-900 mb-4">Getting There</h3>
+              <div className="space-y-4">
+                {venue.transport.mtr && (
+                  <div className="flex gap-3">
+                    <span className="text-xl shrink-0">🚇</span>
+                    <div>
+                      <div className="text-sm font-semibold text-slate-800">
+                        {venue.transport.mtr.station} MTR
+                        {venue.transport.mtr.exit && (
+                          <span className="ml-1.5 text-xs font-normal text-slate-500">(Exit {venue.transport.mtr.exit})</span>
+                        )}
+                      </div>
+                      <div className="text-xs text-slate-500 mt-0.5">
+                        {venue.transport.mtr.line} · {venue.transport.mtr.walkMins} min walk
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {venue.transport.ferry && (
+                  <div className="flex gap-3">
+                    <span className="text-xl shrink-0">⛴️</span>
+                    <div className="text-sm text-slate-700">{venue.transport.ferry}</div>
+                  </div>
+                )}
+                {venue.transport.bus && venue.transport.bus.length > 0 && (
+                  <div className="flex gap-3">
+                    <span className="text-xl shrink-0">🚌</span>
+                    <div>
+                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Bus routes</div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {venue.transport.bus.map((r) => (
+                          <span key={r} className="text-xs px-2 py-0.5 rounded-full bg-sky-50 text-sky-800 border border-sky-100">{r}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {venue.transport.minibus && venue.transport.minibus.length > 0 && (
+                  <div className="flex gap-3">
+                    <span className="text-xl shrink-0">🚐</span>
+                    <div>
+                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Minibus</div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {venue.transport.minibus.map((r) => (
+                          <span key={r} className="text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-800 border border-green-100">{r}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {venue.transport.shuttle && (
+                  <div className="flex gap-3">
+                    <span className="text-xl shrink-0">🚌</span>
+                    <div className="text-sm text-slate-700">{venue.transport.shuttle}</div>
+                  </div>
+                )}
+                {venue.transport.notes && (
+                  <p className="text-xs text-slate-500 bg-[#F3EBE0] rounded-lg px-3 py-2 border border-[#E0D4C4]">
+                    💡 {venue.transport.notes}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Reviews */}
+            <div ref={reviewsRef} className="p-4 sm:p-6 border-b border-[#E0D4C4]">
+              <ForumReviewsSection venueId={venue.id} fallback={venue.reviews} />
+              <UserReviews venueId={venue.id} onCountChange={setUgcCount} />
+            </div>
+
+            {/* Photos */}
+            <div ref={photosRef} className="p-4 sm:p-6">
+              <h3 className="font-display text-lg font-semibold text-slate-900 mb-4">
+                Photos ({venue.images.length})
+              </h3>
+              <Gallery venue={venue} onLightbox={setLightbox} />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-[1100] bg-black/85 flex items-center justify-center p-4"
+          onClick={() => setLightbox(null)}
+        >
+          <div className="relative max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setLightbox(null)}
+              className="absolute -top-10 right-0 text-white/80 hover:text-white text-3xl leading-none"
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <img
+              src={lightbox.url}
+              alt={lightbox.caption}
+              className="w-full max-h-[85vh] object-contain rounded-xl"
+            />
+            {lightbox.caption && (
+              <p className="mt-3 text-center text-sm text-white/70">{lightbox.caption}</p>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
-function Gallery({ venue }: { venue: Venue }) {
-  const groups: { label: string; kind: "exterior" | "interior" | "facility" }[] =
-    [
-      { label: "Exterior", kind: "exterior" },
-      { label: "Interior", kind: "interior" },
-      { label: "Facilities", kind: "facility" },
-    ];
+function Gallery({
+  venue,
+  onLightbox,
+}: {
+  venue: Venue;
+  onLightbox: (img: { url: string; caption: string }) => void;
+}) {
+  const groups: { label: string; kind: "exterior" | "interior" | "facility" }[] = [
+    { label: "Exterior", kind: "exterior" },
+    { label: "Interior", kind: "interior" },
+    { label: "Facilities", kind: "facility" },
+  ];
+
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {groups.map(({ label, kind }) => {
         const imgs = venue.images.filter((i) => i.kind === kind);
         if (imgs.length === 0) return null;
         return (
           <div key={kind}>
-            <h3 className="text-xs uppercase tracking-wide text-slate-500 font-semibold mb-1.5">
+            <h4 className="text-xs uppercase tracking-wide text-slate-500 font-semibold mb-2">
               {label}
-            </h3>
+            </h4>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {imgs.map((img) => (
                 <figure
                   key={img.url}
-                  className="rounded-lg overflow-hidden border border-slate-200 bg-slate-100"
+                  className="rounded-lg overflow-hidden border border-[#D9CDBF] bg-[#EDE6DA] cursor-zoom-in"
+                  onClick={() => onLightbox(img)}
                 >
                   <div
                     className="aspect-[4/3] bg-cover bg-center"
@@ -463,9 +871,32 @@ function Gallery({ venue }: { venue: Venue }) {
   );
 }
 
+// Strips inline "(hkwvdb.com)" style citations and replaces with a superscript link.
+function Blurb({ text, sourceUrl, className = "" }: { text: string; sourceUrl?: string; className?: string }) {
+  const clean = text.replace(/\s*\([^)]*(?:hkwvdb|\.com|\.hk)[^)]*\)/gi, "").trimEnd();
+  return (
+    <p className={className}>
+      {clean}
+      {sourceUrl && (
+        <sup>
+          <a
+            href={sourceUrl}
+            target="_blank"
+            rel="noreferrer"
+            title="Source: hkwvdb.com"
+            className="ml-0.5 text-blush-500 hover:text-blush-700 text-[10px] font-sans"
+          >
+            [src]
+          </a>
+        </sup>
+      )}
+    </p>
+  );
+}
+
 function Info({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-slate-50 rounded-lg p-3 border border-slate-100">
+    <div className="bg-[#F3EBE0] rounded-lg p-3 border border-[#E0D4C4]">
       <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
         {label}
       </div>
@@ -481,7 +912,7 @@ const SENTIMENT_STYLE: Record<Sentiment, { label: string; className: string }> =
   },
   neutral: {
     label: "Neutral",
-    className: "bg-slate-100 text-slate-700 border-slate-200",
+    className: "bg-[#EDE6DA] text-[#5C4A35] border-[#D9CDBF]",
   },
   negative: {
     label: "Negative",
@@ -513,7 +944,7 @@ function ForumReviewsSection({
           {fallback.map((r, i) => (
             <div
               key={i}
-              className="border border-slate-200 rounded-lg p-3 bg-slate-50"
+              className="border border-[#D9CDBF] rounded-lg p-3 bg-[#F3EBE0]"
             >
               <div className="text-sm font-medium text-slate-800">
                 {r.author} · ★ {r.rating}
@@ -593,7 +1024,7 @@ function ForumReviewsSection({
               className={`text-xs px-2.5 py-1 rounded-full border transition ${
                 active
                   ? "bg-slate-900 text-white border-slate-900"
-                  : "bg-white text-slate-700 border-slate-200 hover:border-slate-400 disabled:opacity-40"
+                  : "bg-cream text-[#5C4A35] border-[#D9CDBF] hover:border-blush-400 disabled:opacity-40"
               }`}
             >
               {b.label} · {b.count}
@@ -632,7 +1063,7 @@ function ReviewCard({
 }) {
   const style = SENTIMENT_STYLE[review.sentiment];
   return (
-    <div className="border border-slate-200 rounded-lg p-3 bg-white">
+    <div className="border border-[#D9CDBF] rounded-lg p-3 bg-white">
       <div className="flex items-center justify-between gap-2">
         <div className="text-sm font-medium text-slate-800">
           {review.author}

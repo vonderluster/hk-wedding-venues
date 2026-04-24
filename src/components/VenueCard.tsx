@@ -42,7 +42,7 @@ export default function VenueCard({
       <div className="p-4 flex flex-col gap-2 flex-grow">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <h3 className="font-display text-lg font-semibold text-slate-900 leading-tight">
+            <h3 className="font-display text-lg text-slate-900 leading-tight">
               {venue.name}
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -58,30 +58,38 @@ export default function VenueCard({
             </div>
           </div>
         </div>
-        <p className="text-sm text-slate-600 line-clamp-2">{venue.blurb}</p>
+        <p className="text-sm text-slate-600 line-clamp-2">
+          {venue.blurb.replace(/\s*\([^)]*(?:hkwvdb|\.com|\.hk)[^)]*\)/gi, "")}
+        </p>
         <div className="text-xs text-slate-700 mt-1 flex flex-wrap gap-x-3 gap-y-1">
           <span>💰 {formatPrice(venue.pricePerHead)}</span>
           {venue.tables[1] > 0 && (
             <span>
-              🪑 {venue.tables[0]}–{venue.tables[1]} tables · up to {maxGuests}{" "}
-              guests
+              🪑{" "}
+              {venue.tables[0] > 1
+                ? `${venue.tables[0]}–${venue.tables[1]}`
+                : `Up to ${venue.tables[1]}`}{" "}
+              tables · up to {maxGuests} guests
             </span>
           )}
         </div>
         <div className="flex flex-wrap gap-1 mt-1">
-          {venue.settings.slice(0, 3).map((s) => (
+          {venue.venueTypes.slice(0, 2).map((t) => (
+            <span
+              key={t}
+              className="text-[11px] px-2 py-0.5 rounded-full bg-blush-50 text-blush-700 border border-blush-100"
+            >
+              {t}
+            </span>
+          ))}
+          {venue.scenery.slice(0, 2).map((s) => (
             <span
               key={s}
-              className="text-[11px] px-2 py-0.5 rounded-full bg-blush-50 text-blush-700 border border-blush-100"
+              className="text-[11px] px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-100"
             >
               {s}
             </span>
           ))}
-          {venue.facilities.includes("Church") && (
-            <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-100">
-              ⛪ Church
-            </span>
-          )}
         </div>
         <div className="mt-auto pt-3 flex gap-2">
           <button
@@ -102,7 +110,7 @@ export default function VenueCard({
               e.stopPropagation();
               onSelect(venue.id);
             }}
-            className="text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 bg-white hover:bg-slate-50"
+            className="text-xs font-medium px-3 py-1.5 rounded-lg border border-[#D9CDBF] text-[#5C4A35] bg-white hover:bg-blush-50"
           >
             Details
           </button>

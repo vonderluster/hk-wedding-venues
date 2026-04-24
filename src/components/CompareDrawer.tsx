@@ -17,12 +17,13 @@ const attrs: { label: string; render: (v: Venue) => React.ReactNode }[] = [
     render: (v) =>
       v.tables[1] === 0
         ? "—"
-        : `${v.tables[0]}–${v.tables[1]} tables (up to ${
-            v.tables[1] * GUESTS_PER_TABLE
-          } guests)`,
+        : v.tables[0] > 1
+        ? `${v.tables[0]}–${v.tables[1]} tables (up to ${v.tables[1] * GUESTS_PER_TABLE} guests)`
+        : `Up to ${v.tables[1]} tables (up to ${v.tables[1] * GUESTS_PER_TABLE} guests)`,
   },
   { label: "Dietary options", render: (v) => v.dietaryOptions.join(", ") },
-  { label: "Setting", render: (v) => v.settings.join(", ") },
+  { label: "Venue type", render: (v) => v.venueTypes.join(", ") },
+  { label: "Scenery", render: (v) => v.scenery.join(", ") || "—" },
   { label: "Facilities", render: (v) => v.facilities.join(", ") },
   {
     label: "Rating",
@@ -38,8 +39,8 @@ export default function CompareDrawer({
 }: Props) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-[1000] bg-black/40 flex items-end sm:items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[85vh] overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-[1002] bg-black/40 flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl max-w-6xl w-full max-h-[85vh] overflow-hidden flex flex-col">
         <div className="p-4 flex items-center justify-between border-b">
           <h2 className="font-display text-xl font-semibold text-slate-900">
             Compare Venues ({venues.length})
@@ -59,21 +60,29 @@ export default function CompareDrawer({
         ) : (
           <div className="overflow-auto flex-1">
             <table className="w-full text-sm">
-              <thead className="bg-blush-50 sticky top-0">
+              <thead className="bg-[#F3EBE0] sticky top-0">
                 <tr>
-                  <th className="text-left p-3 font-medium text-slate-600 w-36">
+                  <th className="text-left p-3 font-medium text-slate-600 w-28 sm:w-36">
                     Attribute
                   </th>
                   {venues.map((v) => (
                     <th
                       key={v.id}
-                      className="text-left p-3 font-display font-semibold text-slate-900 min-w-[220px]"
+                      className="text-left font-display font-semibold text-slate-900 min-w-[160px] sm:min-w-[220px] p-0"
                     >
-                      <div className="flex items-start justify-between gap-2">
+                      <div
+                        className="h-32 w-full bg-cover bg-center bg-slate-200"
+                        style={{
+                          backgroundImage: v.images[0]
+                            ? `url(${v.images[0].url})`
+                            : undefined,
+                        }}
+                      />
+                      <div className="flex items-start justify-between gap-2 p-3">
                         <span>{v.name}</span>
                         <button
                           onClick={() => onRemove(v.id)}
-                          className="text-xs text-slate-400 hover:text-red-600"
+                          className="text-xs text-slate-400 hover:text-red-600 shrink-0"
                         >
                           remove
                         </button>
