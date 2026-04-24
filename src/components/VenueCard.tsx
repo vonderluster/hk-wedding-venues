@@ -21,7 +21,6 @@ export default function VenueCard({
   onSelect,
   onCompare,
 }: Props) {
-  const minGuests = venue.tables[0] * GUESTS_PER_TABLE;
   const maxGuests = venue.tables[1] * GUESTS_PER_TABLE;
   return (
     <article
