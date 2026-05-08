@@ -5,6 +5,8 @@ interface Props {
   venue: Venue;
   selected: boolean;
   compared: boolean;
+  /** When the user has selected a vibe, the labels of vibe choices this venue matched. */
+  matchReasons?: string[];
   onSelect: (id: string) => void;
   onCompare: (id: string) => void;
 }
@@ -18,6 +20,7 @@ export default function VenueCard({
   venue,
   selected,
   compared,
+  matchReasons,
   onSelect,
   onCompare,
 }: Props) {
@@ -32,13 +35,20 @@ export default function VenueCard({
       }`}
     >
       <div
-        className="h-40 w-full bg-cover bg-center bg-slate-200"
+        className="relative h-40 w-full bg-cover bg-center bg-slate-200"
         style={{
           backgroundImage: venue.images[0]
             ? `url(${venue.images[0].url})`
             : undefined,
         }}
-      />
+      >
+        {matchReasons && matchReasons.length > 0 && (
+          <div className="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[11px] font-medium text-blush-700 border border-blush-200 shadow-sm">
+            <span>✦</span>
+            <span>Matches {matchReasons.slice(0, 2).join(", ")}{matchReasons.length > 2 ? ` +${matchReasons.length - 2}` : ""}</span>
+          </div>
+        )}
+      </div>
       <div className="p-4 flex flex-col gap-2 flex-grow">
         <div className="flex items-start justify-between gap-2">
           <div>

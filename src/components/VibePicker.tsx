@@ -1,19 +1,20 @@
 import { useState } from "react";
-import type { VenueType, Scenery } from "../data/venues";
+import type { Venue, VenueType, Scenery } from "../data/venues";
 
-export interface VibeFilters {
-  venueTypes: VenueType[];
-  scenery: Scenery[];
-  minTables: number;
+export interface VibeSelection {
+  styles: string[];
+  settings: string[];
+  size: string | null;
 }
+
+export const EMPTY_VIBE: VibeSelection = { styles: [], settings: [], size: null };
 
 interface VibeOption {
   id: string;
   label: string;
   sub: string;
   emoji: string;
-  gradient: string;
-  textColor: string;
+  imageUrl: string;
 }
 
 interface SizeOption {
@@ -24,93 +25,92 @@ interface SizeOption {
   minTables: number;
 }
 
-const STYLE_OPTIONS: VibeOption[] = [
+export const STYLE_OPTIONS: VibeOption[] = [
   {
     id: "grand",
     label: "Grand & Lavish",
     sub: "Luxury hotels, grand ballrooms",
     emoji: "✨",
-    gradient: "linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%)",
-    textColor: "#e8d5b7",
+    imageUrl:
+      "https://www.hkwvdb.com/venue-photo/Rosewood%20Hong%20Kong%20Hotel/photo/rosewood-hong-kong-hotel-wedding-1.jpg",
   },
   {
     id: "intimate",
     label: "Intimate & Romantic",
     sub: "Cosy settings, closest friends only",
     emoji: "🕯",
-    gradient: "linear-gradient(135deg, #c9897a 0%, #b07060 60%, #8a5040 100%)",
-    textColor: "#fff0eb",
+    imageUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/0/0a/1881_Heritage_Stable_Block_201108.jpg",
   },
   {
     id: "heritage",
     label: "Heritage & Classic",
     sub: "Historic buildings, timeless elegance",
     emoji: "🏛",
-    gradient: "linear-gradient(135deg, #7a5c1e 0%, #9a7830 60%, #c4a050 100%)",
-    textColor: "#fff8e7",
+    imageUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/e/e1/The_Peninsula_Hong_Kong_%28full_view%29.jpg",
   },
   {
     id: "nautical",
     label: "Nautical & Breezy",
     sub: "Yachts, marinas, harbour views",
     emoji: "⚓",
-    gradient: "linear-gradient(135deg, #03045e 0%, #0077b6 60%, #48cae4 100%)",
-    textColor: "#caf0f8",
+    imageUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/1/1c/HK_GoldCoast_Marina_Magic_Shopping_Mall_201506.jpg",
   },
   {
     id: "garden",
     label: "Garden & Whimsical",
     sub: "Lush greens, florals, open air magic",
     emoji: "🌿",
-    gradient: "linear-gradient(135deg, #1b4332 0%, #40916c 60%, #74c69d 100%)",
-    textColor: "#d8f3dc",
+    imageUrl: "https://www.fwdhouse1881.com/images/features-img-thelawn.jpg",
   },
   {
     id: "club",
     label: "Club & Country",
     sub: "Golf clubs, rolling greens",
     emoji: "⛳",
-    gradient: "linear-gradient(135deg, #4a5820 0%, #7a8a38 60%, #b8c860 100%)",
-    textColor: "#f0f8d0",
+    imageUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/5/5a/The_Clearwater_Bay_Golf_%26_Country_Club_201407-1.jpg",
   },
 ];
 
-const SETTING_OPTIONS: VibeOption[] = [
+export const SETTING_OPTIONS: VibeOption[] = [
   {
     id: "seaside",
     label: "By the Sea",
     sub: "Harbour, ocean & coastal",
     emoji: "🌊",
-    gradient: "linear-gradient(135deg, #005f73 0%, #0a9396 60%, #94d2bd 100%)",
-    textColor: "#e0fbfc",
+    imageUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/6/6c/The_Repulse_Bay_Overview_201501.jpg",
   },
   {
     id: "garden",
     label: "Outdoor Garden",
     sub: "Florals, open air, nature",
     emoji: "🌸",
-    gradient: "linear-gradient(135deg, #2d6a4f 0%, #52b788 60%, #b7e4c7 100%)",
-    textColor: "#1b4332",
+    imageUrl:
+      "https://www.countryclub.hk/upload/3_private-events/3-3_venues/_twoColGridThumb/3941/1.-The-Lawn-CCW_24Augl24_0317_Hi_Res.webp",
   },
   {
     id: "rooftop",
     label: "Rooftop & Skyline",
     sub: "Hong Kong city views, dusk light",
     emoji: "🌆",
-    gradient: "linear-gradient(135deg, #1a1a2e 0%, #533483 60%, #c94b63 100%)",
-    textColor: "#ffd7e0",
+    imageUrl:
+      "https://edge.sitecorecloud.io/swirehotels1-swirehotels-production-ebf6/media/Project/Upper-House/upper-house/hongkong/Private-Events/the-lawn/ellermann-showcase-0054.jpg",
   },
   {
     id: "grassland",
     label: "Open Grassland",
     sub: "Rolling hills, countryside feel",
     emoji: "🌾",
-    gradient: "linear-gradient(135deg, #6a6930 0%, #a89a48 60%, #e8d878 100%)",
-    textColor: "#2a2808",
+    imageUrl:
+      "https://www.hkwvdb.com/venue-photo/Hyatt%20Regency%20Hong%20Kong%20Shatin/87/Hyatt-Regency-Hong-Kong-Shatin-05.jpg",
   },
 ];
 
-const SIZE_OPTIONS: SizeOption[] = [
+export const SIZE_OPTIONS: SizeOption[] = [
   { id: "micro",   label: "Micro",    sub: "Up to 50 guests",   emoji: "💍", minTables: 0  },
   { id: "cozy",    label: "Intimate", sub: "50 – 100 guests",   emoji: "🥂", minTables: 4  },
   { id: "classic", label: "Classic",  sub: "100 – 180 guests",  emoji: "🎊", minTables: 8  },
@@ -126,12 +126,71 @@ const STYLE_TO_VENUE_TYPE: Record<string, VenueType[]> = {
   club:     ["Golf & Country Club"],
 };
 
+// "Garden & Whimsical" style also matches venues with Outdoor Garden scenery,
+// since the style isn't tied to a single venue type.
+const STYLE_TO_SCENERY: Record<string, Scenery[]> = {
+  garden: ["Outdoor Garden"],
+};
+
 const SETTING_TO_SCENERY: Record<string, Scenery[]> = {
   seaside:   ["Seaside"],
   garden:    ["Outdoor Garden"],
   rooftop:   ["Rooftop"],
   grassland: ["Grassland"],
 };
+
+export function getStyleOption(id: string): VibeOption | undefined {
+  return STYLE_OPTIONS.find((o) => o.id === id);
+}
+export function getSettingOption(id: string): VibeOption | undefined {
+  return SETTING_OPTIONS.find((o) => o.id === id);
+}
+export function getSizeOption(id: string): SizeOption | undefined {
+  return SIZE_OPTIONS.find((o) => o.id === id);
+}
+
+export function vibeIsEmpty(vibe: VibeSelection): boolean {
+  return vibe.styles.length === 0 && vibe.settings.length === 0 && vibe.size === null;
+}
+
+/** Capacity is a real constraint, so size remains a hard filter (min tables). */
+export function vibeMinTables(vibe: VibeSelection): number {
+  if (!vibe.size) return 0;
+  return getSizeOption(vibe.size)?.minTables ?? 0;
+}
+
+/** Soft match: returns score (higher = better fit) and human-readable reasons. */
+export function vibeMatchScore(
+  venue: Venue,
+  vibe: VibeSelection,
+): { score: number; reasons: string[] } {
+  let score = 0;
+  const reasons: string[] = [];
+
+  for (const styleId of vibe.styles) {
+    const types = STYLE_TO_VENUE_TYPE[styleId] ?? [];
+    const sceneries = STYLE_TO_SCENERY[styleId] ?? [];
+    const typeMatch = types.length > 0 && types.some((t) => venue.venueTypes.includes(t));
+    const sceneryMatch =
+      sceneries.length > 0 && sceneries.some((s) => venue.scenery.includes(s));
+    if (typeMatch || sceneryMatch) {
+      score += 30;
+      const opt = getStyleOption(styleId);
+      if (opt) reasons.push(opt.label);
+    }
+  }
+
+  for (const settingId of vibe.settings) {
+    const sceneries = SETTING_TO_SCENERY[settingId] ?? [];
+    if (sceneries.some((s) => venue.scenery.includes(s))) {
+      score += 25;
+      const opt = getSettingOption(settingId);
+      if (opt) reasons.push(opt.label);
+    }
+  }
+
+  return { score, reasons };
+}
 
 function VibeCard({
   option,
@@ -145,30 +204,30 @@ function VibeCard({
   return (
     <button
       onClick={onToggle}
-      className={`relative rounded-2xl overflow-hidden text-left transition-all duration-150 ${
+      className={`relative rounded-2xl overflow-hidden text-left transition-all duration-150 bg-slate-300 ${
         selected
           ? "ring-4 ring-blush-500 shadow-lg scale-[1.02]"
           : "shadow-sm hover:shadow-md hover:scale-[1.01]"
       }`}
-      style={{ background: option.gradient }}
+      style={{
+        backgroundImage: `url(${option.imageUrl})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
+      {/* Dark gradient overlay for label legibility */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10 pointer-events-none" />
       {selected && (
-        <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-white/90 flex items-center justify-center shadow-sm">
+        <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-white/95 flex items-center justify-center shadow z-10">
           <span className="text-blush-700 text-xs font-bold">✓</span>
         </div>
       )}
-      <div className="p-5 sm:p-6 h-36 sm:h-40 flex flex-col justify-end">
-        <div className="text-3xl mb-2">{option.emoji}</div>
-        <div
-          className="font-display text-base sm:text-lg leading-tight"
-          style={{ color: option.textColor }}
-        >
+      <div className="relative p-5 sm:p-6 h-36 sm:h-40 flex flex-col justify-end">
+        <div className="font-display text-base sm:text-lg leading-tight text-white drop-shadow-md">
+          <span className="mr-1.5">{option.emoji}</span>
           {option.label}
         </div>
-        <div
-          className="text-xs mt-1 leading-snug"
-          style={{ color: option.textColor, opacity: 0.75 }}
-        >
+        <div className="text-xs mt-1 leading-snug text-white/90 drop-shadow">
           {option.sub}
         </div>
       </div>
@@ -177,13 +236,19 @@ function VibeCard({
 }
 
 export default function VibePicker({
+  initial,
   onComplete,
 }: {
-  onComplete: (filters: VibeFilters) => void;
+  initial?: VibeSelection;
+  onComplete: (selection: VibeSelection) => void;
 }) {
-  const [selectedStyles, setSelectedStyles] = useState<Set<string>>(new Set());
-  const [selectedSettings, setSelectedSettings] = useState<Set<string>>(new Set());
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedStyles, setSelectedStyles] = useState<Set<string>>(
+    new Set(initial?.styles ?? []),
+  );
+  const [selectedSettings, setSelectedSettings] = useState<Set<string>>(
+    new Set(initial?.settings ?? []),
+  );
+  const [selectedSize, setSelectedSize] = useState<string | null>(initial?.size ?? null);
 
   const toggleSet = (set: Set<string>, id: string): Set<string> => {
     const next = new Set(set);
@@ -195,23 +260,11 @@ export default function VibePicker({
     selectedStyles.size > 0 || selectedSettings.size > 0 || selectedSize !== null;
 
   const handleComplete = () => {
-    const venueTypes: VenueType[] = [];
-    const scenery: Scenery[] = [];
-
-    selectedStyles.forEach((id) => {
-      STYLE_TO_VENUE_TYPE[id]?.forEach((t) => {
-        if (!venueTypes.includes(t)) venueTypes.push(t);
-      });
+    onComplete({
+      styles: Array.from(selectedStyles),
+      settings: Array.from(selectedSettings),
+      size: selectedSize,
     });
-
-    selectedSettings.forEach((id) => {
-      SETTING_TO_SCENERY[id]?.forEach((s) => {
-        if (!scenery.includes(s)) scenery.push(s);
-      });
-    });
-
-    const size = SIZE_OPTIONS.find((s) => s.id === selectedSize);
-    onComplete({ venueTypes, scenery, minTables: size?.minTables ?? 0 });
   };
 
   return (
@@ -224,7 +277,7 @@ export default function VibePicker({
             What's your vibe?
           </h2>
           <p className="text-slate-500 text-base sm:text-lg max-w-xl mx-auto">
-            Pick what speaks to you — we'll find venues that match your dream day.
+            Pick what speaks to you — we'll rank Hong Kong wedding venues that match your dream day.
           </p>
         </div>
 
@@ -292,7 +345,7 @@ export default function VibePicker({
             disabled={!canProceed}
             className="px-12 py-4 rounded-xl bg-blush-600 text-white font-medium text-base hover:bg-blush-700 transition-all shadow-md disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
           >
-            Show me my venues →
+            Find our venues →
           </button>
           {!canProceed && (
             <p className="text-sm text-slate-400">Pick at least one option above to continue</p>

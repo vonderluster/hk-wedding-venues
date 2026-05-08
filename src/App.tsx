@@ -17,7 +17,16 @@ import MapView from "./components/MapView";
 import CompareDrawer from "./components/CompareDrawer";
 import UserReviews from "./components/UserReviews";
 import AIRecommender from "./components/AIRecommender";
-import VibePicker, { type VibeFilters } from "./components/VibePicker";
+import VibePicker, {
+  EMPTY_VIBE,
+  vibeIsEmpty,
+  vibeMinTables,
+  vibeMatchScore,
+  getStyleOption,
+  getSettingOption,
+  getSizeOption,
+  type VibeSelection,
+} from "./components/VibePicker";
 import {
   forumReviewsByVenueId,
   SOURCE_LABELS,
@@ -28,7 +37,7 @@ import "./App.css";
 
 const PRICE_MAX = 3500;
 
-type SortKey = "rating" | "price-asc" | "price-desc" | "capacity";
+type SortKey = "match" | "rating" | "price-asc" | "price-desc" | "capacity";
 
 export default function App() {
   const [priceMax, setPriceMax] = useState(PRICE_MAX);
@@ -44,14 +53,48 @@ export default function App() {
   const [compareOpen, setCompareOpen] = useState(false);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
   const [mapVisible, setMapVisible] = useState(false);
-  const [page, setPage] = useState<"vibe" | "finder">("finder");
+  const [page, setPage] = useState<"vibe" | "finder">("vibe");
+  const [vibe, setVibe] = useState<VibeSelection>(EMPTY_VIBE);
 
-  const handleVibeComplete = ({ venueTypes: vt, scenery: sc, minTables: mt }: VibeFilters) => {
-    setVenueTypes(vt);
-    setScenery(sc);
-    setMinTables(mt);
+  const handleVibeComplete = (selection: VibeSelection) => {
+    setVibe(selection);
+    // Size translates to a hard minTables filter (capacity is a real constraint).
+    // Style + setting do NOT become hard filters — they're soft scoring inputs only.
+    setMinTables(vibeMinTables(selection));
+    const hasPicks =
+      selection.styles.length > 0 || selection.settings.length > 0 || selection.size !== null;
+    if (hasPicks) setSort("match");
     setPage("finder");
   };
+
+  const removeStyle = (id: string) => {
+    const next = { ...vibe, styles: vibe.styles.filter((s) => s !== id) };
+    setVibe(next);
+  };
+  const removeSetting = (id: string) => {
+    const next = { ...vibe, settings: vibe.settings.filter((s) => s !== id) };
+    setVibe(next);
+  };
+  const removeSize = () => {
+    setVibe({ ...vibe, size: null });
+    setMinTables(0);
+  };
+  const clearVibe = () => {
+    setVibe(EMPTY_VIBE);
+    setMinTables(0);
+    if (sort === "match") setSort("rating");
+  };
+
+  const hasVibe = !vibeIsEmpty(vibe);
+
+  const matchByVenue = useMemo(() => {
+    const map = new Map<string, { score: number; reasons: string[] }>();
+    if (!hasVibe) return map;
+    for (const v of allVenues) {
+      map.set(v.id, vibeMatchScore(v, vibe));
+    }
+    return map;
+  }, [hasVibe, vibe]);
 
   const toggle = <T,>(list: T[], value: T, set: (v: T[]) => void) => {
     set(list.includes(value) ? list.filter((x) => x !== value) : [...list, value]);
@@ -76,6 +119,12 @@ export default function App() {
 
     result = [...result].sort((a, b) => {
       switch (sort) {
+        case "match": {
+          const sa = matchByVenue.get(a.id)?.score ?? 0;
+          const sb = matchByVenue.get(b.id)?.score ?? 0;
+          if (sa !== sb) return sb - sa;
+          return b.rating - a.rating;
+        }
         case "price-asc":
           return a.pricePerHead[0] - b.pricePerHead[0];
         case "price-desc":
@@ -88,7 +137,7 @@ export default function App() {
       }
     });
     return result;
-  }, [priceMax, minTables, venueTypes, scenery, facilities, districts, search, sort]);
+  }, [priceMax, minTables, venueTypes, scenery, facilities, districts, search, sort, matchByVenue]);
 
   const selected = allVenues.find((v) => v.id === selectedId) ?? null;
   const compared = allVenues.filter((v) => compareIds.includes(v.id));
@@ -157,6 +206,7 @@ export default function App() {
                   onChange={(e) => setSort(e.target.value as SortKey)}
                   className="border border-[#D9CDBF] rounded-lg px-3 py-1.5 text-sm bg-white shrink-0"
                 >
+                  {hasVibe && <option value="match">Best match</option>}
                   <option value="rating">Top rated</option>
                   <option value="price-asc">Price: low → high</option>
                   <option value="price-desc">Price: high → low</option>
@@ -187,7 +237,7 @@ export default function App() {
       </header>
 
       {page === "vibe" ? (
-        <VibePicker onComplete={handleVibeComplete} />
+        <VibePicker initial={vibe} onComplete={handleVibeComplete} />
       ) : (<>
 
       {/* Mobile: Filters | Map action bar */}
@@ -302,12 +352,66 @@ export default function App() {
             />
           </div>
 
+          {hasVibe && (
+            <div className="flex flex-wrap items-center gap-2 -mb-2">
+              <span className="text-xs uppercase tracking-wide text-slate-500 mr-1">
+                Your vibe:
+              </span>
+              {vibe.styles.map((id) => {
+                const opt = getStyleOption(id);
+                if (!opt) return null;
+                return (
+                  <VibeChip
+                    key={`style-${id}`}
+                    emoji={opt.emoji}
+                    label={opt.label}
+                    onRemove={() => removeStyle(id)}
+                  />
+                );
+              })}
+              {vibe.settings.map((id) => {
+                const opt = getSettingOption(id);
+                if (!opt) return null;
+                return (
+                  <VibeChip
+                    key={`setting-${id}`}
+                    emoji={opt.emoji}
+                    label={opt.label}
+                    onRemove={() => removeSetting(id)}
+                  />
+                );
+              })}
+              {vibe.size && (() => {
+                const opt = getSizeOption(vibe.size);
+                if (!opt) return null;
+                return (
+                  <VibeChip
+                    emoji={opt.emoji}
+                    label={`${opt.label} · ${opt.sub}`}
+                    onRemove={removeSize}
+                  />
+                );
+              })()}
+              <button
+                onClick={() => setPage("vibe")}
+                className="text-xs px-3 py-1 rounded-full border border-blush-300 text-blush-700 bg-blush-50 hover:bg-blush-100 transition"
+              >
+                + Refine vibes
+              </button>
+              <button
+                onClick={clearVibe}
+                className="text-xs px-2 py-1 text-slate-500 hover:text-slate-700 underline"
+              >
+                Clear all
+              </button>
+            </div>
+          )}
           <div className="flex items-center justify-between">
             <p className="text-sm text-slate-600">
               <span className="font-semibold text-slate-900">
                 {filtered.length}
               </span>{" "}
-              venue{filtered.length === 1 ? "" : "s"} match your criteria
+              venue{filtered.length === 1 ? "" : "s"}{hasVibe ? ", ranked by your vibe" : " match your criteria"}
             </p>
           </div>
 
@@ -318,6 +422,7 @@ export default function App() {
                 venue={v}
                 selected={v.id === selectedId}
                 compared={compareIds.includes(v.id)}
+                matchReasons={matchByVenue.get(v.id)?.reasons}
                 onSelect={setSelectedId}
                 onCompare={(id) => {
                   const isAdding = !compareIds.includes(id);
@@ -460,6 +565,30 @@ export default function App() {
 
       </>)}
     </div>
+  );
+}
+
+function VibeChip({
+  emoji,
+  label,
+  onRemove,
+}: {
+  emoji: string;
+  label: string;
+  onRemove: () => void;
+}) {
+  return (
+    <span className="inline-flex items-center gap-1.5 pl-2.5 pr-1 py-1 rounded-full bg-white border border-[#D9CDBF] text-xs text-[#5C4A35] shadow-sm">
+      <span className="text-sm leading-none">{emoji}</span>
+      <span className="font-medium">{label}</span>
+      <button
+        onClick={onRemove}
+        aria-label={`Remove ${label}`}
+        className="ml-0.5 w-4 h-4 rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-700 leading-none flex items-center justify-center"
+      >
+        ×
+      </button>
+    </span>
   );
 }
 
