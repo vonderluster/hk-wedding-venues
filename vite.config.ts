@@ -54,7 +54,6 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
   return {
-    base: "/hk-wedding-venues/",
     plugins: [react(), anthropicProxy(env.ANTHROPIC_API_KEY ?? "")],
   };
 });
