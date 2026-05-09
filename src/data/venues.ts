@@ -181,6 +181,16 @@ export const venues: Venue[] = [
     ],
     images: [
       {
+        url: "/venue-photos/rosewood-hk-1.png",
+        kind: "exterior",
+        caption: "Rosewood Hong Kong tower at Victoria Dockside",
+      },
+      {
+        url: "/venue-photos/rosewood-hk-2.jpg",
+        kind: "interior",
+        caption: "Grand lobby",
+      },
+      {
         url: "https://www.hkwvdb.com/venue-photo/Rosewood%20Hong%20Kong%20Hotel/photo/rosewood-hong-kong-hotel-wedding-1.jpg",
         kind: "interior",
         caption: "Wedding setup at Rosewood (hkwvdb.com)",
@@ -266,6 +276,16 @@ export const venues: Venue[] = [
     ],
     images: [
       {
+        url: "/venue-photos/peninsula-hk-1.jpg",
+        kind: "exterior",
+        caption: "Full façade in TST",
+      },
+      {
+        url: "/venue-photos/peninsula-hk-2.jpg",
+        kind: "exterior",
+        caption: "Main driveway and entrance",
+      },
+      {
         url: "https://upload.wikimedia.org/wikipedia/commons/e/e1/The_Peninsula_Hong_Kong_%28full_view%29.jpg",
         kind: "exterior",
         caption: "Full façade in TST",
@@ -333,6 +353,11 @@ export const venues: Venue[] = [
     reviewCount: 46,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free", "Nut-free"],
     images: [
+      {
+        url: "/venue-photos/repulse-bay-1.jpg",
+        kind: "exterior",
+        caption: "Seaside exterior overlooking Repulse Bay",
+      },
       {
         url: "https://www.hkwvdb.com/venue-photo/The%20Repulse%20Bay/photo/The-Repulse-Bay-Hong-Kong-wedding-01.jpg",
         kind: "interior",
@@ -403,6 +428,11 @@ export const venues: Venue[] = [
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free"],
     images: [
       {
+        url: "/venue-photos/hullett-house-1.jpg",
+        kind: "exterior",
+        caption: "1881 Heritage compound",
+      },
+      {
         url: "https://upload.wikimedia.org/wikipedia/commons/3/3a/1881_Heritage_Complex.jpg",
         kind: "exterior",
         caption: "1881 Heritage compound",
@@ -449,6 +479,11 @@ export const venues: Venue[] = [
     reviewCount: 687,
     dietaryOptions: ["Vegetarian", "Vegan", "Gluten-free", "Nut-free"],
     images: [
+      {
+        url: "/venue-photos/verandah-1.jpg",
+        kind: "exterior",
+        caption: "Repulse Bay seaside complex housing The Verandah",
+      },
       {
         url: "https://upload.wikimedia.org/wikipedia/commons/4/4c/The_Repulse_Bay_The_Verandah_2015.JPG",
         kind: "interior",
@@ -513,6 +548,11 @@ export const venues: Venue[] = [
     reviewCount: 3953,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free", "Nut-free"],
     images: [
+      {
+        url: "/venue-photos/hyatt-shatin-1.jpg",
+        kind: "exterior",
+        caption: "Hyatt Regency Sha Tin façade",
+      },
       {
         url: "https://www.hkwvdb.com/venue-photo/Hyatt%20Regency%20Hong%20Kong%20Shatin/photo/Hyatt-Regency-Hong-Kong-wedding-1.jpg",
         kind: "interior",
@@ -676,6 +716,11 @@ export const venues: Venue[] = [
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free"],
     images: [
       {
+        url: "/venue-photos/hong-kong-gold-coast-hotel-1.jpg",
+        kind: "exterior",
+        caption: "Gold Coast Marina and resort area",
+      },
+      {
         url: "https://www.hkwvdb.com/venue-photo/Hong%20Kong%20Gold%20Coast%20Hotel/photo/Gold-Coast-Hotel-wedding.jpg",
         kind: "interior",
         caption: "Wedding setup (hkwvdb.com)",
@@ -817,6 +862,11 @@ export const venues: Venue[] = [
     reviewCount: 1356,
     dietaryOptions: ["Ceremony-only — no catering on site"],
     images: [
+      {
+        url: "/venue-photos/st-johns-cathedral-1.jpg",
+        kind: "exterior",
+        caption: "St. John's Cathedral exterior",
+      },
       {
         url: "https://upload.wikimedia.org/wikipedia/commons/6/6e/St_John_Cathedral_Hong_Kong_%28cropped%29.jpg",
         kind: "exterior",
@@ -1144,6 +1194,11 @@ export const venues: Venue[] = [
     ],
     images: [
       {
+        url: "/venue-photos/island-shangri-la-1.jpg",
+        kind: "exterior",
+        caption: "Island Shangri-La above Pacific Place",
+      },
+      {
         url: "https://www.hkwvdb.com/venue-photo/Island%20Shangri-La%20Hotel%20-%20Hong%20Kong/58/Island-Shangri-La-Hotel-Hong-Kong-wedding-01.jpg",
         kind: "interior",
         caption: "Island Ballroom set for wedding (hkwvdb.com)",
@@ -1301,6 +1356,11 @@ export const venues: Venue[] = [
     reviewCount: 4248,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free"],
     images: [
+      {
+        url: "/venue-photos/fwd-house-1881-lawn-1.jpg",
+        kind: "exterior",
+        caption: "1881 Heritage compound",
+      },
       {
         url: "https://www.fwdhouse1881.com/images/features-img-thelawn.jpg",
         kind: "exterior",
