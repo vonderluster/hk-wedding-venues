@@ -640,6 +640,16 @@ export const venues: Venue[] = [
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free"],
     images: [
       {
+        url: "/venue-photos/gold-coast-yacht-1.jpg",
+        kind: "exterior",
+        caption: "Gold Coast Yacht & Country Club",
+      },
+      {
+        url: "/venue-photos/gold-coast-yacht-2.jpg",
+        kind: "interior",
+        caption: "Gold Coast Yacht & Country Club (interior)",
+      },
+      {
         url: "https://www.hkwvdb.com/venue-photo/Gold%20Coast%20Yacht%20and%20Country%20Club/photo/gold-coast-yacht-and-country-club-floorplan.jpg",
         kind: "floor-plan",
         caption: "Ballroom floor plan (hkwvdb.com)",
@@ -805,6 +815,16 @@ export const venues: Venue[] = [
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free", "Nut-free"],
     images: [
       {
+        url: "/venue-photos/clearwater-bay-1.jpg",
+        kind: "exterior",
+        caption: "The Clearwater Bay Golf & Country Club",
+      },
+      {
+        url: "/venue-photos/clearwater-bay-2.jpg",
+        kind: "interior",
+        caption: "The Clearwater Bay Golf & Country Club (interior)",
+      },
+      {
         url: "https://www.hkwvdb.com/venue-photo/The%20Clearwater%20Bay%20Golf%20and%20Country%20Club/photo/The-Clearwater-Bay-Golf-Country-Club-01.jpg",
         kind: "exterior",
         caption: "Clubhouse and golf course (hkwvdb.com)",
@@ -933,6 +953,16 @@ export const venues: Venue[] = [
     ],
     images: [
       {
+        url: "/venue-photos/mira-1.jpg",
+        kind: "exterior",
+        caption: "The Mira Hong Kong",
+      },
+      {
+        url: "/venue-photos/mira-2.jpg",
+        kind: "interior",
+        caption: "The Mira Hong Kong (interior)",
+      },
+      {
         url: "https://www.hkwvdb.com/venue-photo/The%20Mira%20Hotel/photo/The-mira-hotel-wedding-04.jpg",
         kind: "interior",
         caption: "Ballroom with LED wall (hkwvdb.com)",
@@ -1012,6 +1042,16 @@ export const venues: Venue[] = [
     reviewCount: 2363,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free", "Nut-free"],
     images: [
+      {
+        url: "/venue-photos/auberge-discovery-bay-1.jpg",
+        kind: "exterior",
+        caption: "Auberge Discovery Bay",
+      },
+      {
+        url: "/venue-photos/auberge-discovery-bay-2.jpg",
+        kind: "interior",
+        caption: "Auberge Discovery Bay (interior)",
+      },
       {
         url: "https://www.hkwvdb.com/venue-photo/Auberge%20Discovery%20Bay%20Hong%20Kong/91/Auberge-Discover-Bay-Hotel-3.jpg",
         kind: "interior",
@@ -1096,6 +1136,16 @@ export const venues: Venue[] = [
     reviewCount: 5026,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free", "Nut-free"],
     images: [
+      {
+        url: "/venue-photos/hotel-icon-1.jpg",
+        kind: "exterior",
+        caption: "Hotel ICON",
+      },
+      {
+        url: "/venue-photos/hotel-icon-2.jpg",
+        kind: "interior",
+        caption: "Hotel ICON (interior)",
+      },
       {
         url: "https://www.hkwvdb.com/venue-photo/Hotel%20Icon/73/hotel-icon-wedding-4.jpg",
         kind: "interior",
@@ -1287,6 +1337,11 @@ export const venues: Venue[] = [
     dietaryOptions: ["Vegetarian", "Vegan", "Gluten-free", "Nut-free"],
     images: [
       {
+        url: "/venue-photos/upper-house-lawn-1.jpg",
+        kind: "exterior",
+        caption: "The Upper House – Level 6 Lawn",
+      },
+      {
         url: "https://edge.sitecorecloud.io/swirehotels1-swirehotels-production-ebf6/media/Project/Upper-House/upper-house/hongkong/Private-Events/the-lawn/ellermann-showcase-0054.jpg",
         kind: "exterior",
         caption: "The Lawn at The Upper House, Level 6",
@@ -1435,6 +1490,16 @@ export const venues: Venue[] = [
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free"],
     images: [
       {
+        url: "/venue-photos/hk-country-club-1.webp",
+        kind: "exterior",
+        caption: "Hong Kong Country Club – Outdoor Lawn",
+      },
+      {
+        url: "/venue-photos/hk-country-club-2.webp",
+        kind: "interior",
+        caption: "Hong Kong Country Club – Outdoor Lawn (interior)",
+      },
+      {
         url: "https://www.countryclub.hk/upload/3_private-events/3-3_venues/_twoColGridThumb/3941/1.-The-Lawn-CCW_24Augl24_0317_Hi_Res.webp",
         kind: "exterior",
         caption: "The Lawn overlooking Deep Water Bay",
@@ -1502,6 +1567,16 @@ export const venues: Venue[] = [
     reviewCount: 3200,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free"],
     images: [
+      {
+        url: "/venue-photos/crowne-plaza-kowloon-east-1.jpg",
+        kind: "exterior",
+        caption: "The Royal Garden Kowloon East",
+      },
+      {
+        url: "/venue-photos/crowne-plaza-kowloon-east-2.jpg",
+        kind: "interior",
+        caption: "The Royal Garden Kowloon East (interior)",
+      },
       {
         url: "https://www.rghk.com.hk/uploads/images/1L0A7250--230213180327.jpg",
         kind: "interior",
@@ -1594,6 +1669,11 @@ export const venues: Venue[] = [
     dietaryOptions: ["BYO / self-arranged catering only"],
     images: [
       {
+        url: "/venue-photos/lcsd-bauhinia-garden-1.jpg",
+        kind: "exterior",
+        caption: "LCSD – Bauhinia Garden, Kowloon Tsai Park",
+      },
+      {
         url: "https://www.lcsd.gov.hk/en/wedding/common/graphics/kowloon_garden_new.jpg",
         kind: "exterior",
         caption: "Bauhinia Garden, Kowloon Tsai Park (LCSD)",
@@ -1630,6 +1710,16 @@ export const venues: Venue[] = [
     reviewCount: 0,
     dietaryOptions: ["BYO / self-arranged catering only"],
     images: [
+      {
+        url: "/venue-photos/lcsd-kowloon-walled-city-1.jpg",
+        kind: "exterior",
+        caption: "LCSD – Six Arts Terrace & Bamboo Pavilion, Kowloon Walled City Park",
+      },
+      {
+        url: "/venue-photos/lcsd-kowloon-walled-city-2.jpg",
+        kind: "interior",
+        caption: "LCSD – Six Arts Terrace & Bamboo Pavilion, Kowloon Walled City Park (interior)",
+      },
       {
         url: "https://www.lcsd.gov.hk/en/wedding/common/graphics/wall_city01.jpg",
         kind: "exterior",
@@ -1670,6 +1760,16 @@ export const venues: Venue[] = [
     reviewCount: 0,
     dietaryOptions: ["BYO / self-arranged catering only"],
     images: [
+      {
+        url: "/venue-photos/lcsd-sai-kung-waterfront-1.jpg",
+        kind: "exterior",
+        caption: "LCSD – Sai Kung Waterfront Park (Upper Platform)",
+      },
+      {
+        url: "/venue-photos/lcsd-sai-kung-waterfront-2.jpg",
+        kind: "interior",
+        caption: "LCSD – Sai Kung Waterfront Park (Upper Platform) (interior)",
+      },
       {
         url: "https://www.lcsd.gov.hk/en/wedding/common/graphics/saikung01.jpg",
         kind: "exterior",
@@ -1713,6 +1813,16 @@ export const venues: Venue[] = [
     reviewCount: 0,
     dietaryOptions: ["BYO / self-arranged catering only"],
     images: [
+      {
+        url: "/venue-photos/lcsd-tai-po-waterfront-1.jpg",
+        kind: "exterior",
+        caption: "LCSD – Tai Po Waterfront Park (Amphitheatre & Lawn)",
+      },
+      {
+        url: "/venue-photos/lcsd-tai-po-waterfront-2.jpg",
+        kind: "interior",
+        caption: "LCSD – Tai Po Waterfront Park (Amphitheatre & Lawn) (interior)",
+      },
       {
         url: "https://www.lcsd.gov.hk/en/wedding/common/graphics/taipo01.jpg",
         kind: "exterior",
@@ -1758,6 +1868,16 @@ export const venues: Venue[] = [
     dietaryOptions: ["BYO / self-arranged catering only"],
     images: [
       {
+        url: "/venue-photos/lcsd-lei-yue-mun-1.jpg",
+        kind: "exterior",
+        caption: "LCSD – Assembly Hall, Lei Yue Mun Park & Holiday Village",
+      },
+      {
+        url: "/venue-photos/lcsd-lei-yue-mun-2.jpg",
+        kind: "interior",
+        caption: "LCSD – Assembly Hall, Lei Yue Mun Park & Holiday Village (interior)",
+      },
+      {
         url: "https://www.lcsd.gov.hk/en/wedding/common/graphics/leiyuman01.jpg",
         kind: "interior",
         caption: "Assembly Hall, Lei Yue Mun Park (LCSD)",
@@ -1798,6 +1918,16 @@ export const venues: Venue[] = [
     reviewCount: 0,
     dietaryOptions: ["BYO / self-arranged catering only"],
     images: [
+      {
+        url: "/venue-photos/lcsd-repulse-bay-beach-1.jpg",
+        kind: "exterior",
+        caption: "LCSD – Repulse Bay Beach (Seaside Pavilion & Garden)",
+      },
+      {
+        url: "/venue-photos/lcsd-repulse-bay-beach-2.jpg",
+        kind: "interior",
+        caption: "LCSD – Repulse Bay Beach (Seaside Pavilion & Garden) (interior)",
+      },
       {
         url: "https://www.lcsd.gov.hk/en/wedding/common/graphics/repulse_bay01.jpg",
         kind: "exterior",
@@ -1873,7 +2003,13 @@ export const venues: Venue[] = [
     rating: 4.3,
     reviewCount: 0,
     dietaryOptions: ["Vegetarian", "Vegan"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/the-air-the-one-1.jpg",
+        kind: "exterior",
+        caption: "THE AIR @ THE ONE",
+      },
+    ],
     blurb:
       "THE AIR sits on the rooftop of THE ONE in the heart of Tsim Sha Tsui, swapping ballroom walls for the city skyline. Ceremony rental is 2 hours with basic lighting, sound, and styling included — HK$29,800 weekdays, HK$49,800–100,000 Friday through Sunday and public holidays — with the harbour and Hong Kong Island as your backdrop.",
     reviews: [],
@@ -1908,7 +2044,13 @@ export const venues: Venue[] = [
     rating: 4.4,
     reviewCount: 0,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free", "Nut-free"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/hk-disneyland-hotel-1.jpg",
+        kind: "exterior",
+        caption: "Hong Kong Disneyland Hotel – Fairy Tale Wedding",
+      },
+    ],
     blurb:
       "Hong Kong Disneyland Hotel offers three distinct outdoor ceremony settings — the classic White Gazebo, the storybook Dreamers' Garden, and the West Lawn overlooking the South China Sea. The 2-hour ceremony-and-cocktail package starts at HK$120,000 for 50 guests and includes optional Disney character cameos and theme park admission add-ons for a full fairy-tale day.",
     reviews: [],
@@ -1986,6 +2128,11 @@ export const venues: Venue[] = [
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Kosher (by request)", "Gluten-free", "Nut-free"],
     images: [
       {
+        url: "/venue-photos/mandarin-oriental-hong-kong-1.jpg",
+        kind: "exterior",
+        caption: "Mandarin Oriental Hong Kong",
+      },
+      {
         url: "https://www.hkwvdb.com/venue-photo/Mandarin%20Oriental%20Hong%20Kong/photo/mandarin-oriental-hong-kong-wedding-1.jpg",
         kind: "interior",
         caption: "Connaught Room ballroom (hkwvdb.com)",
@@ -2050,6 +2197,11 @@ export const venues: Venue[] = [
     reviewCount: 2847,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Kosher (by request)", "Gluten-free", "Nut-free"],
     images: [
+      {
+        url: "/venue-photos/four-seasons-hong-kong-1.jpg",
+        kind: "exterior",
+        caption: "Four Seasons Hotel Hong Kong",
+      },
       {
         url: "https://www.hkwvdb.com/venue-photo/Four%20Seasons%20Hotel%20Hong%20Kong/photo/four-seasons-hotel-hong-kong-wedding-1.jpg",
         kind: "ballroom",
@@ -2898,6 +3050,11 @@ export const venues: Venue[] = [
     reviewCount: 203,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free", "Nut-free"],
     images: [
+      {
+        url: "/venue-photos/aberdeen-marina-club-1.jpg",
+        kind: "exterior",
+        caption: "Aberdeen Marina Club",
+      },
       {
         url: "https://www.hkwvdb.com/venue-photo/Aberdeen%20Marina%20Club/photo/aberdeen-marina-club-wedding-1.jpg",
         kind: "ballroom",
