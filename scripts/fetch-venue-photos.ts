@@ -580,22 +580,27 @@ async function downloadVenue(
     return [];
   }
 
-  // Short-circuit if every slot is already on disk and valid.
-  let alreadyAllPresent = true;
-  for (let i = 1; i <= MAX_PER_VENUE; i++) {
-    if (!existingValidFile(path.join(PHOTOS_DIR, `${venueId}-${i}`))) {
-      alreadyAllPresent = false;
-      break;
-    }
-  }
-  if (alreadyAllPresent) {
-    const out: string[] = [];
+  // Short-circuit if every slot is already on disk and valid — UNLESS the
+  // venue has an OVERRIDE_IMAGES entry, in which case we always re-download
+  // so a newly-added override takes effect immediately.
+  const hasOverride = (OVERRIDE_IMAGES[venueId] ?? []).length > 0;
+  if (!hasOverride) {
+    let alreadyAllPresent = true;
     for (let i = 1; i <= MAX_PER_VENUE; i++) {
-      const f = existingValidFile(path.join(PHOTOS_DIR, `${venueId}-${i}`));
-      if (f) out.push(`/venue-photos/${path.basename(f)}`);
+      if (!existingValidFile(path.join(PHOTOS_DIR, `${venueId}-${i}`))) {
+        alreadyAllPresent = false;
+        break;
+      }
     }
-    console.log(`  [cached] ${venueId} (${out.length} slot(s))`);
-    return out;
+    if (alreadyAllPresent) {
+      const out: string[] = [];
+      for (let i = 1; i <= MAX_PER_VENUE; i++) {
+        const f = existingValidFile(path.join(PHOTOS_DIR, `${venueId}-${i}`));
+        if (f) out.push(`/venue-photos/${path.basename(f)}`);
+      }
+      console.log(`  [cached] ${venueId} (${out.length} slot(s))`);
+      return out;
+    }
   }
 
   // 1. Explicit overrides (highest priority — hand-picked known-good URLs).

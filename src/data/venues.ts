@@ -2273,6 +2273,16 @@ export const venues: Venue[] = [
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free", "Nut-free"],
     images: [
       {
+        url: "/venue-photos/conrad-hong-kong-1.jpg",
+        kind: "exterior",
+        caption: "Conrad Hong Kong",
+      },
+      {
+        url: "/venue-photos/conrad-hong-kong-2.jpg",
+        kind: "interior",
+        caption: "Conrad Hong Kong (interior)",
+      },
+      {
         url: "https://www.hkwvdb.com/venue-photo/Conrad%20Hong%20Kong/photo/conrad-hong-kong-wedding-1.jpg",
         kind: "ballroom",
         caption: "Grand Ballroom (hkwvdb.com)",
@@ -2340,6 +2350,16 @@ export const venues: Venue[] = [
     reviewCount: 3520,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Kosher (by request)", "Gluten-free", "Nut-free"],
     images: [
+      {
+        url: "/venue-photos/ritz-carlton-hong-kong-1.jpg",
+        kind: "exterior",
+        caption: "The Ritz-Carlton Hong Kong",
+      },
+      {
+        url: "/venue-photos/ritz-carlton-hong-kong-2.jpg",
+        kind: "interior",
+        caption: "The Ritz-Carlton Hong Kong (interior)",
+      },
       {
         url: "/venue-photos/ritz-carlton-hong-kong-1.png",
         kind: "exterior",
@@ -2499,6 +2519,16 @@ export const venues: Venue[] = [
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free", "Nut-free"],
     images: [
       {
+        url: "/venue-photos/the-murray-hong-kong-1.jpg",
+        kind: "exterior",
+        caption: "The Murray, Hong Kong",
+      },
+      {
+        url: "/venue-photos/the-murray-hong-kong-2.jpg",
+        kind: "interior",
+        caption: "The Murray, Hong Kong (interior)",
+      },
+      {
         url: "https://www.hkwvdb.com/venue-photo/The%20Murray%20Hong%20Kong/photo/the-murray-hong-kong-wedding-1.jpg",
         kind: "ballroom",
         caption: "Niccolo Room ballroom (hkwvdb.com)",
@@ -2564,6 +2594,16 @@ export const venues: Venue[] = [
     reviewCount: 2456,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free"],
     images: [
+      {
+        url: "/venue-photos/intercontinental-grand-stanford-1.jpg",
+        kind: "exterior",
+        caption: "InterContinental Grand Stanford Hong Kong",
+      },
+      {
+        url: "/venue-photos/intercontinental-grand-stanford-2.jpg",
+        kind: "interior",
+        caption: "InterContinental Grand Stanford Hong Kong (interior)",
+      },
       {
         url: "https://www.hkwvdb.com/venue-photo/InterContinental%20Grand%20Stanford%20Hong%20Kong/photo/intercontinental-grand-stanford-hong-kong-wedding-1.jpg",
         kind: "ballroom",
@@ -2708,6 +2748,16 @@ export const venues: Venue[] = [
     reviewCount: 3100,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Kosher (by request)", "Gluten-free", "Nut-free"],
     images: [
+      {
+        url: "/venue-photos/regent-hong-kong-1.jpg",
+        kind: "exterior",
+        caption: "Regent Hong Kong",
+      },
+      {
+        url: "/venue-photos/regent-hong-kong-2.jpg",
+        kind: "interior",
+        caption: "Regent Hong Kong (interior)",
+      },
       {
         url: "https://www.hkwvdb.com/venue-photo/Regent%20Hong%20Kong/photo/regent-hong-kong-wedding-1.jpg",
         kind: "ballroom",
@@ -2917,6 +2967,16 @@ export const venues: Venue[] = [
     reviewCount: 2234,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free"],
     images: [
+      {
+        url: "/venue-photos/hyatt-regency-tsim-sha-tsui-1.jpg",
+        kind: "exterior",
+        caption: "Hyatt Regency Hong Kong, Tsim Sha Tsui",
+      },
+      {
+        url: "/venue-photos/hyatt-regency-tsim-sha-tsui-2.jpg",
+        kind: "interior",
+        caption: "Hyatt Regency Hong Kong, Tsim Sha Tsui (interior)",
+      },
       {
         url: "https://www.hkwvdb.com/venue-photo/Hyatt%20Regency%20Hong%20Kong%20TST/photo/hyatt-regency-hong-kong-tst-wedding-1.jpg",
         kind: "ballroom",
@@ -3245,7 +3305,18 @@ export const venues: Venue[] = [
     rating: 4.6,
     reviewCount: 18000,
     dietaryOptions: ["Vegetarian", "Vegan", "Gluten-free", "Halal"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/tai-kwun-the-rooms-1.jpg",
+        kind: "exterior",
+        caption: "Tai Kwun — The Rooms",
+      },
+      {
+        url: "/venue-photos/tai-kwun-the-rooms-2.jpg",
+        kind: "interior",
+        caption: "Tai Kwun — The Rooms (interior)",
+      },
+    ],
     blurb:
       "Restored former Central Police Station compound. Block 9 — the 1841 Magistrate's House — has been reopened as a series of high-ceilinged colonial salons with vintage tiles, French windows, and arched doorways. Multiple rooms scale from intimate dinners to courtyard ceremonies; on-site kitchen and dedicated event team. (Not listed on hkwvdb.com — details unverified.)",
     reviews: [],
@@ -3275,7 +3346,18 @@ export const venues: Venue[] = [
     rating: 4.5,
     reviewCount: 412,
     dietaryOptions: ["Vegetarian", "Vegan", "Gluten-free"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/haw-par-mansion-1.jpg",
+        kind: "exterior",
+        caption: "Haw Par Mansion",
+      },
+      {
+        url: "/venue-photos/haw-par-mansion-2.jpg",
+        kind: "interior",
+        caption: "Haw Par Mansion (interior)",
+      },
+    ],
     blurb:
       "Rare Chinese Renaissance architecture — gilded ceilings, jade-green roof tiles, and a private garden over Causeway Bay. Operated as a music academy with limited private events; best for small, culturally rooted weddings of 30–150 guests. (Not listed on hkwvdb.com — details unverified.)",
     reviews: [],
@@ -3306,7 +3388,18 @@ export const venues: Venue[] = [
     rating: 4.4,
     reviewCount: 1850,
     dietaryOptions: ["Vegetarian", "Vegan", "Gluten-free"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/flagstaff-house-tea-ware-1.jpg",
+        kind: "exterior",
+        caption: "Flagstaff House Museum of Tea Ware",
+      },
+      {
+        url: "/venue-photos/flagstaff-house-tea-ware-2.jpg",
+        kind: "interior",
+        caption: "Flagstaff House Museum of Tea Ware (interior)",
+      },
+    ],
     blurb:
       "1846 colonial mansion — Hong Kong's oldest surviving Western building — tucked inside Hong Kong Park. Available for private hire through LCSD. The wraparound verandah and koi pond garden make a quiet, photo-rich setting for intimate weddings of 30–120 guests. (Not listed on hkwvdb.com — details unverified.)",
     reviews: [],
@@ -3339,7 +3432,18 @@ export const venues: Venue[] = [
     rating: 4.6,
     reviewCount: 1320,
     dietaryOptions: ["Vegetarian", "Vegan", "Gluten-free", "Halal"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/jao-tsung-i-academy-1.jpg",
+        kind: "exterior",
+        caption: "Jao Tsung-I Academy",
+      },
+      {
+        url: "/venue-photos/jao-tsung-i-academy-2.jpg",
+        kind: "interior",
+        caption: "Jao Tsung-I Academy (interior)",
+      },
+    ],
     blurb:
       "Grade III historic compound dedicated to Chinese culture — the iconic red-brick wall along the entrance courtyard makes one of the city's most distinctive processional aisles. Three tiers of buildings, lower-tier banquet halls, gardens, and an on-site teahouse and guesthouse. Genuinely Chinese in tone rather than colonial. (Not listed on hkwvdb.com — details unverified.)",
     reviews: [],
@@ -3368,7 +3472,18 @@ export const venues: Venue[] = [
     rating: 4.7,
     reviewCount: 540,
     dietaryOptions: [],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/bethanie-chapel-1.jpg",
+        kind: "exterior",
+        caption: "Béthanie Chapel",
+      },
+      {
+        url: "/venue-photos/bethanie-chapel-2.jpg",
+        kind: "interior",
+        caption: "Béthanie Chapel (interior)",
+      },
+    ],
     blurb:
       "Grade I listed 1875 chapel within the Hong Kong Academy for Performing Arts. Gothic-influenced architecture, original stained glass, and superb acoustics make it one of Hong Kong's most-requested heritage chapels for ceremonies. Reception space is limited — most couples pair it with a separate dinner venue. Ceremony-only bookings via HKAPA. (Not listed on hkwvdb.com — details unverified.)",
     reviews: [],
@@ -3400,7 +3515,18 @@ export const venues: Venue[] = [
     rating: 4.6,
     reviewCount: 780,
     dietaryOptions: ["Vegetarian", "Vegan", "Gluten-free", "Nut-free"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/the-lake-house-1.jpg",
+        kind: "exterior",
+        caption: "The Lake House",
+      },
+      {
+        url: "/venue-photos/the-lake-house-2.jpg",
+        kind: "interior",
+        caption: "The Lake House (interior)",
+      },
+    ],
     blurb:
       "European-style heritage building modelled on the old Tai Po Market Railway Station — and Hong Kong's rare lakeside wedding venue, sitting right on Lake Egret amid Tai Po Kau's forest reserve. Indoor banquet rooms plus lawn ceremony areas; pier for boat-ride photos. The best single-site bridge between heritage and nature on the list. (Not listed on hkwvdb.com — details unverified.)",
     reviews: [],
@@ -3474,7 +3600,18 @@ export const venues: Venue[] = [
     rating: 4.8,
     reviewCount: 95,
     dietaryOptions: ["Vegetarian", "Vegan", "Gluten-free", "Nut-free"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/the-grassland-clear-water-bay-1.jpg",
+        kind: "exterior",
+        caption: "The Grassland",
+      },
+      {
+        url: "/venue-photos/the-grassland-clear-water-bay-2.jpg",
+        kind: "interior",
+        caption: "The Grassland (interior)",
+      },
+    ],
     blurb:
       "★ HERO GRASSLAND PICK. Secluded outdoor venue in the mountains of Clear Water Bay, 10-minute drive from Hang Hau MTR. Up to 250 guests, sweeping panoramic mountain views, and a signature fairy-light canopy option for evening receptions. The default answer to \"is there a real grassland venue in NT?\". (Not listed on hkwvdb.com — bookings via WhatsApp 5547 8447.)",
     reviews: [],
@@ -3600,7 +3737,18 @@ export const venues: Venue[] = [
     rating: 4.6,
     reviewCount: 285,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free", "Nut-free"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/beas-river-country-club-1.jpg",
+        kind: "exterior",
+        caption: "Beas River Country Club",
+      },
+      {
+        url: "/venue-photos/beas-river-country-club-2.jpg",
+        kind: "interior",
+        caption: "Beas River Country Club (interior)",
+      },
+    ],
     blurb:
       "HKJC's countryside estate in Sheung Shui — true rural-NT setting on horseback-riding grounds, very different aesthetic from Sai Kung. Multiple ballrooms (Plantation, Riverview), garden ceremony lawns, and on-site villas for the bridal party. Members-only; non-members need member sponsorship. (Not listed on hkwvdb.com — details unverified.)",
     reviews: [],
@@ -3634,7 +3782,18 @@ export const venues: Venue[] = [
     rating: 4.6,
     reviewCount: 1240,
     dietaryOptions: ["Vegetarian", "Vegan", "Halal", "Gluten-free"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/tai-o-heritage-hotel-1.jpg",
+        kind: "exterior",
+        caption: "Tai O Heritage Hotel",
+      },
+      {
+        url: "/venue-photos/tai-o-heritage-hotel-2.jpg",
+        kind: "interior",
+        caption: "Tai O Heritage Hotel (interior)",
+      },
+    ],
     blurb:
       "Former Tai O Marine Police Station, restored as a 9-room colonial boutique hotel on the western tip of Lantau. The Lookout glass restaurant overlooks the Pearl River Estuary; sampan rides between ceremony locations are a signature touch. Full property buyouts available for destination-style weddings of up to 80 guests. (Not listed on hkwvdb.com — details unverified.)",
     reviews: [],
@@ -3735,7 +3894,18 @@ export const venues: Venue[] = [
     rating: 4.3,
     reviewCount: 1840,
     dietaryOptions: [],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/lcsd-mui-wo-beach-1.jpg",
+        kind: "exterior",
+        caption: "Silvermine Bay Beach (Mui Wo)",
+      },
+      {
+        url: "/venue-photos/lcsd-mui-wo-beach-2.jpg",
+        kind: "interior",
+        caption: "Silvermine Bay Beach (Mui Wo) (interior)",
+      },
+    ],
     blurb:
       "LCSD-managed Lantau beach — wide, quiet, and 5 minutes' walk from the Mui Wo ferry pier. Ideal for barefoot or elopement-style ceremonies. Apply via LCSD's 12-month-ahead ballot — HK$2,500 / 4 hours, capacity ~100. Pair with a Mui Wo restaurant for the dinner. (LCSD ceremony permit — details via lcsd.gov.hk.)",
     reviews: [],
@@ -3761,7 +3931,18 @@ export const venues: Venue[] = [
     rating: 4.5,
     reviewCount: 1620,
     dietaryOptions: [],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/lcsd-cheung-sha-beach-1.jpg",
+        kind: "exterior",
+        caption: "Lower Cheung Sha Beach",
+      },
+      {
+        url: "/venue-photos/lcsd-cheung-sha-beach-2.jpg",
+        kind: "interior",
+        caption: "Lower Cheung Sha Beach (interior)",
+      },
+    ],
     blurb:
       "Hong Kong's longest beach (~3 km of sand), wide enough for genuinely private elopement ceremonies even on weekends. Apply via LCSD's 12-month-ahead ballot — HK$2,500 / 4 hours, capacity ~100. Sunset over the South China Sea. Pair with Palm Beach Teepee or Bathers for the dinner. (LCSD ceremony permit — details via lcsd.gov.hk.)",
     reviews: [],
@@ -3793,7 +3974,18 @@ export const venues: Venue[] = [
     rating: 4.8,
     reviewCount: 95,
     dietaryOptions: ["Vegetarian", "Vegan", "Gluten-free", "Nut-free"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/the-dragon-garden-1.jpg",
+        kind: "exterior",
+        caption: "The Dragon Garden",
+      },
+      {
+        url: "/venue-photos/the-dragon-garden-2.jpg",
+        kind: "interior",
+        caption: "The Dragon Garden (interior)",
+      },
+    ],
     blurb:
       "Privately-held 1940s villa featured in The Man With The Golden Gun — themed pagoda gardens, sculpture lawns, and direct views over the Ma Wan Channel and Tsing Ma Bridge. Booked by direct negotiation only via heritage@dragongarden.hk; limited availability and a screening process for couples. The single most distinctive private estate in HK. (Not listed on hkwvdb.com — by-application only.)",
     reviews: [],

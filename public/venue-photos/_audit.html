@@ -1,0 +1,2683 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Venue photo audit</title>
+<style>
+  body { font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+         max-width: 1200px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+  h1 { margin: 0 0 0.5rem; font-weight: 600; }
+  .summary { background: #f4ede1; border: 1px solid #d9cdbf; padding: 1rem 1.25rem;
+             border-radius: 8px; margin-bottom: 1.5rem; }
+  .summary strong { color: #5c4a35; }
+  .legend { font-size: 13px; color: #555; }
+  .legend .swatch { display: inline-block; width: 12px; height: 12px;
+                    vertical-align: middle; border-radius: 2px; margin-right: 4px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { padding: 0.75rem; border-bottom: 1px solid #eee; vertical-align: top;
+           text-align: left; }
+  tr.suspicious { background: #fff4e6; }
+  tr.suspicious .photo { box-shadow: inset 4px 0 0 #d97706; }
+  tr.no-photo { background: #f8f8f8; color: #666; font-style: italic; }
+  td.vid { font-family: ui-monospace, monospace; font-size: 12px; color: #888;
+           width: 180px; }
+  td.vname { width: 200px; font-weight: 500; }
+  td.vname small { color: #888; font-weight: 400; }
+  td.photo { width: 180px; }
+  td.photo img { max-width: 160px; max-height: 120px; border-radius: 4px;
+                 border: 1px solid #ddd; object-fit: cover; }
+  td.meta { font-size: 13px; }
+  td.meta .fname code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+  td.meta .size { color: #666; margin: 4px 0; }
+  td.meta .src { margin: 4px 0; word-break: break-all; }
+  td.meta .src a { color: #5c4a35; }
+  td.meta .flags { margin-top: 6px; }
+  td.meta .flag { display: inline-block; background: #fef3c7; color: #92400e;
+                  padding: 2px 8px; border-radius: 10px; margin-right: 4px;
+                  margin-bottom: 4px; font-size: 12px; }
+  td.empty { color: #888; font-style: italic; }
+  details.fix { margin-top: 8px; }
+  details.fix summary { cursor: pointer; color: #5c4a35; font-weight: 500; }
+  details.fix pre { background: #1a1a1a; color: #f4ede1; padding: 12px;
+                    border-radius: 4px; font-size: 12px; overflow-x: auto;
+                    margin-top: 8px; }
+</style>
+
+<h1>Venue photo audit</h1>
+<div class="summary">
+  <div><strong>54</strong> / 61 venues have at least one local photo (207 photos total).</div>
+  <div><strong>12</strong> photos flagged for review (small file, or source URL contains poster/floorplan/etc.).</div>
+  <div class="legend" style="margin-top: 8px;">
+    <span class="swatch" style="background: #fff4e6; border: 1px solid #d97706;"></span> Suspicious — click "Mark this as bad" to copy a fix snippet.
+    <span style="margin-left: 1rem;" class="swatch" style="background: #f8f8f8;"></span> No local photo — falls back to icon hero.
+  </div>
+  <div class="legend" style="margin-top: 8px;">Generated 2026-05-12T14:55:15.851Z. Re-run <code>npx tsx scripts/audit-venue-photos.ts</code> after the next scrape.</div>
+</div>
+
+<table>
+  <thead>
+    <tr><th>venue.id</th><th>Name / district</th><th>Photo</th><th>Source &amp; flags</th></tr>
+  </thead>
+  <tbody>
+    
+<tr class="">
+  <td class="vid" rowspan="3">rosewood-hk</td><td class="vname" rowspan="3">Rosewood Hong Kong<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./rosewood-hk-1.png" target="_blank"><img src="./rosewood-hk-1.png" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>rosewood-hk-1.png</code></div>
+    <div class="size">91.9 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./rosewood-hk-2.jpg" target="_blank"><img src="./rosewood-hk-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>rosewood-hk-2.jpg</code></div>
+    <div class="size">3.00 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./rosewood-hk-2.JPG" target="_blank"><img src="./rosewood-hk-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>rosewood-hk-2.JPG</code></div>
+    <div class="size">3.00 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">peninsula-hk</td><td class="vname" rowspan="4">The Peninsula Hong Kong<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./peninsula-hk-1.jpg" target="_blank"><img src="./peninsula-hk-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>peninsula-hk-1.jpg</code></div>
+    <div class="size">11.27 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./peninsula-hk-1.JPG" target="_blank"><img src="./peninsula-hk-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>peninsula-hk-1.JPG</code></div>
+    <div class="size">11.27 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./peninsula-hk-2.jpg" target="_blank"><img src="./peninsula-hk-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>peninsula-hk-2.jpg</code></div>
+    <div class="size">1.71 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./peninsula-hk-2.JPG" target="_blank"><img src="./peninsula-hk-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>peninsula-hk-2.JPG</code></div>
+    <div class="size">1.71 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">repulse-bay</td><td class="vname" rowspan="4">The Repulse Bay<br/><small>Southern</small></td>
+  <td class="photo"><a href="./repulse-bay-1.jpg" target="_blank"><img src="./repulse-bay-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>repulse-bay-1.jpg</code></div>
+    <div class="size">2.43 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./repulse-bay-1.JPG" target="_blank"><img src="./repulse-bay-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>repulse-bay-1.JPG</code></div>
+    <div class="size">2.43 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./repulse-bay-2.jpg" target="_blank"><img src="./repulse-bay-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>repulse-bay-2.jpg</code></div>
+    <div class="size">4.11 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Hong%20Kong%20China%20Middle-Island-01.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Hong%20Kong%20China%20Mid...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./repulse-bay-2.JPG" target="_blank"><img src="./repulse-bay-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>repulse-bay-2.JPG</code></div>
+    <div class="size">4.11 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">hullett-house</td><td class="vname" rowspan="4">Hullett House<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./hullett-house-1.jpg" target="_blank"><img src="./hullett-house-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hullett-house-1.jpg</code></div>
+    <div class="size">2.85 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hullett-house-1.JPG" target="_blank"><img src="./hullett-house-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hullett-house-1.JPG</code></div>
+    <div class="size">2.85 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hullett-house-2.jpg" target="_blank"><img src="./hullett-house-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hullett-house-2.jpg</code></div>
+    <div class="size">3.24 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hullett-house-2.JPG" target="_blank"><img src="./hullett-house-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hullett-house-2.JPG</code></div>
+    <div class="size">3.24 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">verandah</td><td class="vname" rowspan="4">The Verandah<br/><small>Southern</small></td>
+  <td class="photo"><a href="./verandah-1.jpg" target="_blank"><img src="./verandah-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>verandah-1.jpg</code></div>
+    <div class="size">2.43 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./verandah-1.JPG" target="_blank"><img src="./verandah-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>verandah-1.JPG</code></div>
+    <div class="size">2.43 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./verandah-2.jpg" target="_blank"><img src="./verandah-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>verandah-2.jpg</code></div>
+    <div class="size">2.43 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./verandah-2.JPG" target="_blank"><img src="./verandah-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>verandah-2.JPG</code></div>
+    <div class="size">2.43 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">hyatt-shatin</td><td class="vname" rowspan="4">Hyatt Regency Sha Tin<br/><small>Sha Tin</small></td>
+  <td class="photo"><a href="./hyatt-shatin-1.jpg" target="_blank"><img src="./hyatt-shatin-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hyatt-shatin-1.jpg</code></div>
+    <div class="size">868.0 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hyatt-shatin-1.JPG" target="_blank"><img src="./hyatt-shatin-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hyatt-shatin-1.JPG</code></div>
+    <div class="size">868.0 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hyatt-shatin-2.jpg" target="_blank"><img src="./hyatt-shatin-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hyatt-shatin-2.jpg</code></div>
+    <div class="size">1.40 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Hyatt%20Regency%20Hong%20Kong%20Shatin%20Cafe%20Hyatt.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Hyatt%20Regency%20Hong%20...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hyatt-shatin-2.JPG" target="_blank"><img src="./hyatt-shatin-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hyatt-shatin-2.JPG</code></div>
+    <div class="size">1.40 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">gold-coast-yacht</td><td class="vname" rowspan="4">Gold Coast Yacht &amp; Country Club<br/><small>Tsuen Wan</small></td>
+  <td class="photo"><a href="./gold-coast-yacht-1.jpg" target="_blank"><img src="./gold-coast-yacht-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>gold-coast-yacht-1.jpg</code></div>
+    <div class="size">718.7 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./gold-coast-yacht-1.JPG" target="_blank"><img src="./gold-coast-yacht-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>gold-coast-yacht-1.JPG</code></div>
+    <div class="size">718.7 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./gold-coast-yacht-2.jpg" target="_blank"><img src="./gold-coast-yacht-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>gold-coast-yacht-2.jpg</code></div>
+    <div class="size">2.43 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./gold-coast-yacht-2.JPG" target="_blank"><img src="./gold-coast-yacht-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>gold-coast-yacht-2.JPG</code></div>
+    <div class="size">2.43 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">hong-kong-gold-coast-hotel</td><td class="vname" rowspan="4">Hong Kong Gold Coast Hotel<br/><small>Tsuen Wan</small></td>
+  <td class="photo"><a href="./hong-kong-gold-coast-hotel-1.jpg" target="_blank"><img src="./hong-kong-gold-coast-hotel-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hong-kong-gold-coast-hotel-1.jpg</code></div>
+    <div class="size">2.43 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hong-kong-gold-coast-hotel-1.JPG" target="_blank"><img src="./hong-kong-gold-coast-hotel-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hong-kong-gold-coast-hotel-1.JPG</code></div>
+    <div class="size">2.43 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hong-kong-gold-coast-hotel-2.jpg" target="_blank"><img src="./hong-kong-gold-coast-hotel-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hong-kong-gold-coast-hotel-2.jpg</code></div>
+    <div class="size">6.12 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hong-kong-gold-coast-hotel-2.JPG" target="_blank"><img src="./hong-kong-gold-coast-hotel-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hong-kong-gold-coast-hotel-2.JPG</code></div>
+    <div class="size">6.12 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">clearwater-bay</td><td class="vname" rowspan="4">The Clearwater Bay Golf &amp; Country Club<br/><small>Sai Kung</small></td>
+  <td class="photo"><a href="./clearwater-bay-1.jpg" target="_blank"><img src="./clearwater-bay-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>clearwater-bay-1.jpg</code></div>
+    <div class="size">2.06 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./clearwater-bay-1.JPG" target="_blank"><img src="./clearwater-bay-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>clearwater-bay-1.JPG</code></div>
+    <div class="size">2.06 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./clearwater-bay-2.jpg" target="_blank"><img src="./clearwater-bay-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>clearwater-bay-2.jpg</code></div>
+    <div class="size">2.06 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./clearwater-bay-2.JPG" target="_blank"><img src="./clearwater-bay-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>clearwater-bay-2.JPG</code></div>
+    <div class="size">2.06 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">st-johns-cathedral</td><td class="vname" rowspan="4">St. John's Cathedral<br/><small>Central &amp; Western</small></td>
+  <td class="photo"><a href="./st-johns-cathedral-1.jpg" target="_blank"><img src="./st-johns-cathedral-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>st-johns-cathedral-1.jpg</code></div>
+    <div class="size">1.48 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./st-johns-cathedral-1.JPG" target="_blank"><img src="./st-johns-cathedral-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>st-johns-cathedral-1.JPG</code></div>
+    <div class="size">1.48 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./st-johns-cathedral-2.jpg" target="_blank"><img src="./st-johns-cathedral-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>st-johns-cathedral-2.jpg</code></div>
+    <div class="size">4.61 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./st-johns-cathedral-2.JPG" target="_blank"><img src="./st-johns-cathedral-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>st-johns-cathedral-2.JPG</code></div>
+    <div class="size">4.61 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">mira</td><td class="vname" rowspan="4">The Mira Hong Kong<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./mira-1.jpg" target="_blank"><img src="./mira-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>mira-1.jpg</code></div>
+    <div class="size">3.60 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./mira-1.JPG" target="_blank"><img src="./mira-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>mira-1.JPG</code></div>
+    <div class="size">3.60 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./mira-2.jpg" target="_blank"><img src="./mira-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>mira-2.jpg</code></div>
+    <div class="size">3.60 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./mira-2.JPG" target="_blank"><img src="./mira-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>mira-2.JPG</code></div>
+    <div class="size">3.60 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">auberge-discovery-bay</td><td class="vname" rowspan="4">Auberge Discovery Bay<br/><small>Islands</small></td>
+  <td class="photo"><a href="./auberge-discovery-bay-1.jpg" target="_blank"><img src="./auberge-discovery-bay-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>auberge-discovery-bay-1.jpg</code></div>
+    <div class="size">14.64 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./auberge-discovery-bay-1.JPG" target="_blank"><img src="./auberge-discovery-bay-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>auberge-discovery-bay-1.JPG</code></div>
+    <div class="size">14.64 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./auberge-discovery-bay-2.jpg" target="_blank"><img src="./auberge-discovery-bay-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>auberge-discovery-bay-2.jpg</code></div>
+    <div class="size">10.31 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./auberge-discovery-bay-2.JPG" target="_blank"><img src="./auberge-discovery-bay-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>auberge-discovery-bay-2.JPG</code></div>
+    <div class="size">10.31 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">hotel-icon</td><td class="vname" rowspan="4">Hotel ICON<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./hotel-icon-1.jpg" target="_blank"><img src="./hotel-icon-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hotel-icon-1.jpg</code></div>
+    <div class="size">2.00 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hotel-icon-1.JPG" target="_blank"><img src="./hotel-icon-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hotel-icon-1.JPG</code></div>
+    <div class="size">2.00 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hotel-icon-2.jpg" target="_blank"><img src="./hotel-icon-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hotel-icon-2.jpg</code></div>
+    <div class="size">2.65 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hotel-icon-2.JPG" target="_blank"><img src="./hotel-icon-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hotel-icon-2.JPG</code></div>
+    <div class="size">2.65 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">island-shangri-la</td><td class="vname" rowspan="4">Island Shangri-La<br/><small>Central &amp; Western</small></td>
+  <td class="photo"><a href="./island-shangri-la-1.jpg" target="_blank"><img src="./island-shangri-la-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>island-shangri-la-1.jpg</code></div>
+    <div class="size">73.3 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./island-shangri-la-1.JPG" target="_blank"><img src="./island-shangri-la-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>island-shangri-la-1.JPG</code></div>
+    <div class="size">73.3 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./island-shangri-la-2.jpg" target="_blank"><img src="./island-shangri-la-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>island-shangri-la-2.jpg</code></div>
+    <div class="size">5.75 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./island-shangri-la-2.JPG" target="_blank"><img src="./island-shangri-la-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>island-shangri-la-2.JPG</code></div>
+    <div class="size">5.75 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">upper-house-lawn</td><td class="vname" rowspan="4">The Upper House – Level 6 Lawn<br/><small>Central &amp; Western</small></td>
+  <td class="photo"><a href="./upper-house-lawn-1.jpg" target="_blank"><img src="./upper-house-lawn-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>upper-house-lawn-1.jpg</code></div>
+    <div class="size">2.18 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./upper-house-lawn-1.JPG" target="_blank"><img src="./upper-house-lawn-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>upper-house-lawn-1.JPG</code></div>
+    <div class="size">2.18 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./upper-house-lawn-2.jpg" target="_blank"><img src="./upper-house-lawn-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>upper-house-lawn-2.jpg</code></div>
+    <div class="size">2.18 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./upper-house-lawn-2.JPG" target="_blank"><img src="./upper-house-lawn-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>upper-house-lawn-2.JPG</code></div>
+    <div class="size">2.18 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">fwd-house-1881-lawn</td><td class="vname" rowspan="4">FWD House 1881 – The Lawn<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./fwd-house-1881-lawn-1.jpg" target="_blank"><img src="./fwd-house-1881-lawn-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>fwd-house-1881-lawn-1.jpg</code></div>
+    <div class="size">2.85 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./fwd-house-1881-lawn-1.JPG" target="_blank"><img src="./fwd-house-1881-lawn-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>fwd-house-1881-lawn-1.JPG</code></div>
+    <div class="size">2.85 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./fwd-house-1881-lawn-2.jpg" target="_blank"><img src="./fwd-house-1881-lawn-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>fwd-house-1881-lawn-2.jpg</code></div>
+    <div class="size">282.3 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./fwd-house-1881-lawn-2.JPG" target="_blank"><img src="./fwd-house-1881-lawn-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>fwd-house-1881-lawn-2.JPG</code></div>
+    <div class="size">282.3 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="2">hk-country-club</td><td class="vname" rowspan="2">Hong Kong Country Club – Outdoor Lawn<br/><small>Southern</small></td>
+  <td class="photo"><a href="./hk-country-club-1.webp" target="_blank"><img src="./hk-country-club-1.webp" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hk-country-club-1.webp</code></div>
+    <div class="size">124.6 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hk-country-club-2.webp" target="_blank"><img src="./hk-country-club-2.webp" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hk-country-club-2.webp</code></div>
+    <div class="size">93.0 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">crowne-plaza-kowloon-east</td><td class="vname" rowspan="4">The Royal Garden Kowloon East<br/><small>Sai Kung</small></td>
+  <td class="photo"><a href="./crowne-plaza-kowloon-east-1.jpg" target="_blank"><img src="./crowne-plaza-kowloon-east-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>crowne-plaza-kowloon-east-1.jpg</code></div>
+    <div class="size">945.2 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./crowne-plaza-kowloon-east-1.JPG" target="_blank"><img src="./crowne-plaza-kowloon-east-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>crowne-plaza-kowloon-east-1.JPG</code></div>
+    <div class="size">945.2 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./crowne-plaza-kowloon-east-2.jpg" target="_blank"><img src="./crowne-plaza-kowloon-east-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>crowne-plaza-kowloon-east-2.jpg</code></div>
+    <div class="size">518.8 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./crowne-plaza-kowloon-east-2.JPG" target="_blank"><img src="./crowne-plaza-kowloon-east-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>crowne-plaza-kowloon-east-2.JPG</code></div>
+    <div class="size">518.8 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">lcsd-bauhinia-garden</td><td class="vname" rowspan="4">LCSD – Bauhinia Garden, Kowloon Tsai Park<br/><small>Kowloon City</small></td>
+  <td class="photo"><a href="./lcsd-bauhinia-garden-1.jpg" target="_blank"><img src="./lcsd-bauhinia-garden-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-bauhinia-garden-1.jpg</code></div>
+    <div class="size">88.9 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-bauhinia-garden-1.JPG" target="_blank"><img src="./lcsd-bauhinia-garden-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-bauhinia-garden-1.JPG</code></div>
+    <div class="size">88.9 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-bauhinia-garden-2.jpg" target="_blank"><img src="./lcsd-bauhinia-garden-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-bauhinia-garden-2.jpg</code></div>
+    <div class="size">88.9 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-bauhinia-garden-2.JPG" target="_blank"><img src="./lcsd-bauhinia-garden-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-bauhinia-garden-2.JPG</code></div>
+    <div class="size">88.9 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="suspicious">
+  <td class="vid" rowspan="4">lcsd-kowloon-walled-city</td><td class="vname" rowspan="4">LCSD – Six Arts Terrace &amp; Bamboo Pavilion, Kowloon Walled City Park<br/><small>Kowloon City</small></td>
+  <td class="photo"><a href="./lcsd-kowloon-walled-city-1.jpg" target="_blank"><img src="./lcsd-kowloon-walled-city-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-kowloon-walled-city-1.jpg</code></div>
+    <div class="size">19.1 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-kowloon-walled-city": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-kowloon-walled-city-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-kowloon-walled-city</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="suspicious">
+  
+  <td class="photo"><a href="./lcsd-kowloon-walled-city-1.JPG" target="_blank"><img src="./lcsd-kowloon-walled-city-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-kowloon-walled-city-1.JPG</code></div>
+    <div class="size">19.1 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-kowloon-walled-city": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-kowloon-walled-city-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-kowloon-walled-city</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="suspicious">
+  
+  <td class="photo"><a href="./lcsd-kowloon-walled-city-2.jpg" target="_blank"><img src="./lcsd-kowloon-walled-city-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-kowloon-walled-city-2.jpg</code></div>
+    <div class="size">21.0 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-kowloon-walled-city": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-kowloon-walled-city-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-kowloon-walled-city</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="suspicious">
+  
+  <td class="photo"><a href="./lcsd-kowloon-walled-city-2.JPG" target="_blank"><img src="./lcsd-kowloon-walled-city-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-kowloon-walled-city-2.JPG</code></div>
+    <div class="size">21.0 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-kowloon-walled-city": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-kowloon-walled-city-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-kowloon-walled-city</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">lcsd-sai-kung-waterfront</td><td class="vname" rowspan="4">LCSD – Sai Kung Waterfront Park (Upper Platform)<br/><small>Sai Kung</small></td>
+  <td class="photo"><a href="./lcsd-sai-kung-waterfront-1.jpg" target="_blank"><img src="./lcsd-sai-kung-waterfront-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-sai-kung-waterfront-1.jpg</code></div>
+    <div class="size">676.6 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-sai-kung-waterfront-1.JPG" target="_blank"><img src="./lcsd-sai-kung-waterfront-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-sai-kung-waterfront-1.JPG</code></div>
+    <div class="size">676.6 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-sai-kung-waterfront-2.jpg" target="_blank"><img src="./lcsd-sai-kung-waterfront-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-sai-kung-waterfront-2.jpg</code></div>
+    <div class="size">676.6 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Sai_Kung_Waterfront_Park.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Sai_Kung_Waterfront_Park.jpg</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-sai-kung-waterfront-2.JPG" target="_blank"><img src="./lcsd-sai-kung-waterfront-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-sai-kung-waterfront-2.JPG</code></div>
+    <div class="size">676.6 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="suspicious">
+  <td class="vid" rowspan="4">lcsd-tai-po-waterfront</td><td class="vname" rowspan="4">LCSD – Tai Po Waterfront Park (Amphitheatre &amp; Lawn)<br/><small>Tai Po</small></td>
+  <td class="photo"><a href="./lcsd-tai-po-waterfront-1.jpg" target="_blank"><img src="./lcsd-tai-po-waterfront-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-tai-po-waterfront-1.jpg</code></div>
+    <div class="size">22.5 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-tai-po-waterfront": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-tai-po-waterfront-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-tai-po-waterfront</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="suspicious">
+  
+  <td class="photo"><a href="./lcsd-tai-po-waterfront-1.JPG" target="_blank"><img src="./lcsd-tai-po-waterfront-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-tai-po-waterfront-1.JPG</code></div>
+    <div class="size">22.5 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-tai-po-waterfront": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-tai-po-waterfront-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-tai-po-waterfront</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="suspicious">
+  
+  <td class="photo"><a href="./lcsd-tai-po-waterfront-2.jpg" target="_blank"><img src="./lcsd-tai-po-waterfront-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-tai-po-waterfront-2.jpg</code></div>
+    <div class="size">22.4 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-tai-po-waterfront": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-tai-po-waterfront-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-tai-po-waterfront</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="suspicious">
+  
+  <td class="photo"><a href="./lcsd-tai-po-waterfront-2.JPG" target="_blank"><img src="./lcsd-tai-po-waterfront-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-tai-po-waterfront-2.JPG</code></div>
+    <div class="size">22.4 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-tai-po-waterfront": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-tai-po-waterfront-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-tai-po-waterfront</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="suspicious">
+  <td class="vid" rowspan="4">lcsd-lei-yue-mun</td><td class="vname" rowspan="4">LCSD – Assembly Hall, Lei Yue Mun Park &amp; Holiday Village<br/><small>Eastern</small></td>
+  <td class="photo"><a href="./lcsd-lei-yue-mun-1.jpg" target="_blank"><img src="./lcsd-lei-yue-mun-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-lei-yue-mun-1.jpg</code></div>
+    <div class="size">22.8 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-lei-yue-mun": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-lei-yue-mun-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-lei-yue-mun</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="suspicious">
+  
+  <td class="photo"><a href="./lcsd-lei-yue-mun-1.JPG" target="_blank"><img src="./lcsd-lei-yue-mun-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-lei-yue-mun-1.JPG</code></div>
+    <div class="size">22.8 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-lei-yue-mun": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-lei-yue-mun-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-lei-yue-mun</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="suspicious">
+  
+  <td class="photo"><a href="./lcsd-lei-yue-mun-2.jpg" target="_blank"><img src="./lcsd-lei-yue-mun-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-lei-yue-mun-2.jpg</code></div>
+    <div class="size">24.1 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-lei-yue-mun": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-lei-yue-mun-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-lei-yue-mun</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="suspicious">
+  
+  <td class="photo"><a href="./lcsd-lei-yue-mun-2.JPG" target="_blank"><img src="./lcsd-lei-yue-mun-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-lei-yue-mun-2.JPG</code></div>
+    <div class="size">24.1 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">⚠ small file (&lt;50 KB)</span> <span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    <details class="fix"><summary>Mark this as bad</summary>
+      <pre>// To ban this URL pattern, add to BLOCKED_URL_PATTERNS in
+// scripts/fetch-venue-photos.ts:
+"lcsd-lei-yue-mun": [],
+
+// Then delete and re-scrape:
+rm public/venue-photos/lcsd-lei-yue-mun-*.{jpg,png,webp,avif}
+npx tsx scripts/fetch-venue-photos.ts --venue=lcsd-lei-yue-mun</pre>
+    </details>
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">lcsd-repulse-bay-beach</td><td class="vname" rowspan="4">LCSD – Repulse Bay Beach (Seaside Pavilion &amp; Garden)<br/><small>Southern</small></td>
+  <td class="photo"><a href="./lcsd-repulse-bay-beach-1.jpg" target="_blank"><img src="./lcsd-repulse-bay-beach-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-repulse-bay-beach-1.jpg</code></div>
+    <div class="size">303.0 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-repulse-bay-beach-1.JPG" target="_blank"><img src="./lcsd-repulse-bay-beach-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-repulse-bay-beach-1.JPG</code></div>
+    <div class="size">303.0 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-repulse-bay-beach-2.jpg" target="_blank"><img src="./lcsd-repulse-bay-beach-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-repulse-bay-beach-2.jpg</code></div>
+    <div class="size">498.2 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-repulse-bay-beach-2.JPG" target="_blank"><img src="./lcsd-repulse-bay-beach-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-repulse-bay-beach-2.JPG</code></div>
+    <div class="size">498.2 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="no-photo">
+  <td class="vid">my-seasons-my-garden</td>
+  <td class="vname">MY SEASONS – MY GARDEN<br/><small>Kowloon City</small></td>
+  <td colspan="2" class="empty">No local photos — falls back to stylized icon hero. Add to OFFICIAL_PAGES or OVERRIDE_IMAGES in scripts/fetch-venue-photos.ts and re-run.</td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">the-air-the-one</td><td class="vname" rowspan="4">THE AIR @ THE ONE<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./the-air-the-one-1.jpg" target="_blank"><img src="./the-air-the-one-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-air-the-one-1.jpg</code></div>
+    <div class="size">4.23 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-air-the-one-1.JPG" target="_blank"><img src="./the-air-the-one-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-air-the-one-1.JPG</code></div>
+    <div class="size">4.23 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-air-the-one-2.jpg" target="_blank"><img src="./the-air-the-one-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-air-the-one-2.jpg</code></div>
+    <div class="size">6.88 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/The%20AIR%2C%20L16%2C%20The%20ONE%2C%20Hong%20Kong%20-%20DSC%207111.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/The%20AIR%2C%20L16%2C%20T...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-air-the-one-2.JPG" target="_blank"><img src="./the-air-the-one-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-air-the-one-2.JPG</code></div>
+    <div class="size">6.88 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">hk-disneyland-hotel</td><td class="vname" rowspan="4">Hong Kong Disneyland Hotel – Fairy Tale Wedding<br/><small>Islands</small></td>
+  <td class="photo"><a href="./hk-disneyland-hotel-1.jpg" target="_blank"><img src="./hk-disneyland-hotel-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hk-disneyland-hotel-1.jpg</code></div>
+    <div class="size">206.4 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hk-disneyland-hotel-1.JPG" target="_blank"><img src="./hk-disneyland-hotel-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hk-disneyland-hotel-1.JPG</code></div>
+    <div class="size">206.4 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hk-disneyland-hotel-2.jpg" target="_blank"><img src="./hk-disneyland-hotel-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hk-disneyland-hotel-2.jpg</code></div>
+    <div class="size">206.4 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hk-disneyland-hotel-2.JPG" target="_blank"><img src="./hk-disneyland-hotel-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hk-disneyland-hotel-2.JPG</code></div>
+    <div class="size">206.4 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="no-photo">
+  <td class="vid">grand-hyatt-poolhouse</td>
+  <td class="vname">Grand Hyatt Hong Kong – The Poolhouse<br/><small>Wan Chai</small></td>
+  <td colspan="2" class="empty">No local photos — falls back to stylized icon hero. Add to OFFICIAL_PAGES or OVERRIDE_IMAGES in scripts/fetch-venue-photos.ts and re-run.</td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="3">mandarin-oriental-hong-kong</td><td class="vname" rowspan="3">Mandarin Oriental Hong Kong<br/><small>Central &amp; Western</small></td>
+  <td class="photo"><a href="./mandarin-oriental-hong-kong-1.jpg" target="_blank"><img src="./mandarin-oriental-hong-kong-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>mandarin-oriental-hong-kong-1.jpg</code></div>
+    <div class="size">247.7 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./mandarin-oriental-hong-kong-1.JPG" target="_blank"><img src="./mandarin-oriental-hong-kong-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>mandarin-oriental-hong-kong-1.JPG</code></div>
+    <div class="size">247.7 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./mandarin-oriental-hong-kong-2.webp" target="_blank"><img src="./mandarin-oriental-hong-kong-2.webp" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>mandarin-oriental-hong-kong-2.webp</code></div>
+    <div class="size">459.8 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">four-seasons-hong-kong</td><td class="vname" rowspan="4">Four Seasons Hotel Hong Kong<br/><small>Central &amp; Western</small></td>
+  <td class="photo"><a href="./four-seasons-hong-kong-1.jpg" target="_blank"><img src="./four-seasons-hong-kong-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>four-seasons-hong-kong-1.jpg</code></div>
+    <div class="size">1.52 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./four-seasons-hong-kong-1.JPG" target="_blank"><img src="./four-seasons-hong-kong-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>four-seasons-hong-kong-1.JPG</code></div>
+    <div class="size">1.52 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./four-seasons-hong-kong-2.jpg" target="_blank"><img src="./four-seasons-hong-kong-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>four-seasons-hong-kong-2.jpg</code></div>
+    <div class="size">1.52 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./four-seasons-hong-kong-2.JPG" target="_blank"><img src="./four-seasons-hong-kong-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>four-seasons-hong-kong-2.JPG</code></div>
+    <div class="size">1.52 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">conrad-hong-kong</td><td class="vname" rowspan="4">Conrad Hong Kong<br/><small>Central &amp; Western</small></td>
+  <td class="photo"><a href="./conrad-hong-kong-1.jpg" target="_blank"><img src="./conrad-hong-kong-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>conrad-hong-kong-1.jpg</code></div>
+    <div class="size">2.69 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Conrad%20Hong%20Kong%202012.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Conrad%20Hong%20Kong%2020...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./conrad-hong-kong-1.JPG" target="_blank"><img src="./conrad-hong-kong-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>conrad-hong-kong-1.JPG</code></div>
+    <div class="size">2.69 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./conrad-hong-kong-2.jpg" target="_blank"><img src="./conrad-hong-kong-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>conrad-hong-kong-2.jpg</code></div>
+    <div class="size">6.90 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Conrad%20Hong%20Kong%20Swimming%20pool%202021.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Conrad%20Hong%20Kong%20Sw...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./conrad-hong-kong-2.JPG" target="_blank"><img src="./conrad-hong-kong-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>conrad-hong-kong-2.JPG</code></div>
+    <div class="size">6.90 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">ritz-carlton-hong-kong</td><td class="vname" rowspan="4">The Ritz-Carlton Hong Kong<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./ritz-carlton-hong-kong-1.jpg" target="_blank"><img src="./ritz-carlton-hong-kong-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>ritz-carlton-hong-kong-1.jpg</code></div>
+    <div class="size">2.30 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/The%20Ritz-Carlton%20Hong%20Kong%20Level%209%20Lobby.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/The%20Ritz-Carlton%20Hong...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./ritz-carlton-hong-kong-1.JPG" target="_blank"><img src="./ritz-carlton-hong-kong-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>ritz-carlton-hong-kong-1.JPG</code></div>
+    <div class="size">2.30 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./ritz-carlton-hong-kong-2.jpg" target="_blank"><img src="./ritz-carlton-hong-kong-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>ritz-carlton-hong-kong-2.jpg</code></div>
+    <div class="size">1.00 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/The%20Ritz-Carlton%20Hong%20Kong.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/The%20Ritz-Carlton%20Hong...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./ritz-carlton-hong-kong-2.JPG" target="_blank"><img src="./ritz-carlton-hong-kong-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>ritz-carlton-hong-kong-2.JPG</code></div>
+    <div class="size">1.00 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">w-hong-kong</td><td class="vname" rowspan="4">W Hong Kong<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./w-hong-kong-1.jpg" target="_blank"><img src="./w-hong-kong-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>w-hong-kong-1.jpg</code></div>
+    <div class="size">327.7 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./w-hong-kong-1.JPG" target="_blank"><img src="./w-hong-kong-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>w-hong-kong-1.JPG</code></div>
+    <div class="size">327.7 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./w-hong-kong-2.jpg" target="_blank"><img src="./w-hong-kong-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>w-hong-kong-2.jpg</code></div>
+    <div class="size">408.3 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./w-hong-kong-2.JPG" target="_blank"><img src="./w-hong-kong-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>w-hong-kong-2.JPG</code></div>
+    <div class="size">408.3 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">the-murray-hong-kong</td><td class="vname" rowspan="4">The Murray, Hong Kong<br/><small>Central &amp; Western</small></td>
+  <td class="photo"><a href="./the-murray-hong-kong-1.jpg" target="_blank"><img src="./the-murray-hong-kong-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-murray-hong-kong-1.jpg</code></div>
+    <div class="size">4.06 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Hong%20Kong%20Murray%20Bay.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Hong%20Kong%20Murray%20Ba...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-murray-hong-kong-1.JPG" target="_blank"><img src="./the-murray-hong-kong-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-murray-hong-kong-1.JPG</code></div>
+    <div class="size">4.06 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-murray-hong-kong-2.jpg" target="_blank"><img src="./the-murray-hong-kong-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-murray-hong-kong-2.jpg</code></div>
+    <div class="size">498.1 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Stanley%20Hong%20Kong%20Murray%20House%20boats.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Stanley%20Hong%20Kong%20M...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-murray-hong-kong-2.JPG" target="_blank"><img src="./the-murray-hong-kong-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-murray-hong-kong-2.JPG</code></div>
+    <div class="size">498.1 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">intercontinental-grand-stanford</td><td class="vname" rowspan="4">InterContinental Grand Stanford Hong Kong<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./intercontinental-grand-stanford-1.jpg" target="_blank"><img src="./intercontinental-grand-stanford-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>intercontinental-grand-stanford-1.jpg</code></div>
+    <div class="size">451.0 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/InterContinental%20Grand%20Stanford%20Hong%20Kong.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/InterContinental%20Grand%...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./intercontinental-grand-stanford-1.JPG" target="_blank"><img src="./intercontinental-grand-stanford-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>intercontinental-grand-stanford-1.JPG</code></div>
+    <div class="size">451.0 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./intercontinental-grand-stanford-2.jpg" target="_blank"><img src="./intercontinental-grand-stanford-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>intercontinental-grand-stanford-2.jpg</code></div>
+    <div class="size">3.74 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/InterContinental%20Grand%20Stanford%20Hong%20Kong%20(Hong%20Kong).jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/InterContinental%20Grand%...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./intercontinental-grand-stanford-2.JPG" target="_blank"><img src="./intercontinental-grand-stanford-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>intercontinental-grand-stanford-2.JPG</code></div>
+    <div class="size">3.74 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="2">kerry-hotel-hong-kong</td><td class="vname" rowspan="2">Kerry Hotel, Hong Kong<br/><small>Kowloon City</small></td>
+  <td class="photo"><a href="./kerry-hotel-hong-kong-1.webp" target="_blank"><img src="./kerry-hotel-hong-kong-1.webp" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>kerry-hotel-hong-kong-1.webp</code></div>
+    <div class="size">133.6 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./kerry-hotel-hong-kong-2.webp" target="_blank"><img src="./kerry-hotel-hong-kong-2.webp" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>kerry-hotel-hong-kong-2.webp</code></div>
+    <div class="size">96.0 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">regent-hong-kong</td><td class="vname" rowspan="4">Regent Hong Kong<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./regent-hong-kong-1.jpg" target="_blank"><img src="./regent-hong-kong-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>regent-hong-kong-1.jpg</code></div>
+    <div class="size">1.06 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Regent%20Hong%20Kong%20Exterior%20Landscape.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Regent%20Hong%20Kong%20Ex...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./regent-hong-kong-1.JPG" target="_blank"><img src="./regent-hong-kong-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>regent-hong-kong-1.JPG</code></div>
+    <div class="size">1.06 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./regent-hong-kong-2.jpg" target="_blank"><img src="./regent-hong-kong-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>regent-hong-kong-2.jpg</code></div>
+    <div class="size">47.86 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Regent%20Hong%20Kong%20Lobby%20Reception.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Regent%20Hong%20Kong%20Lo...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./regent-hong-kong-2.JPG" target="_blank"><img src="./regent-hong-kong-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>regent-hong-kong-2.JPG</code></div>
+    <div class="size">47.86 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="2">kowloon-shangri-la</td><td class="vname" rowspan="2">Kowloon Shangri-La<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./kowloon-shangri-la-1.webp" target="_blank"><img src="./kowloon-shangri-la-1.webp" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>kowloon-shangri-la-1.webp</code></div>
+    <div class="size">95.1 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://sitecore-cd.shangri-la.com/-/media/Shangri-La/hongkong_kowloonshangrila/Wedding-Celebration/img/KSL_Wedding_Packages_Sep2025_1920x940.jpg" target="_blank">https://sitecore-cd.shangri-la.com/-/media/Shangri-La/hongkong_kowloonshangri...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./kowloon-shangri-la-2.webp" target="_blank"><img src="./kowloon-shangri-la-2.webp" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>kowloon-shangri-la-2.webp</code></div>
+    <div class="size">95.1 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="3">cordis-hong-kong</td><td class="vname" rowspan="3">Cordis, Hong Kong<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./cordis-hong-kong-1.avif" target="_blank"><img src="./cordis-hong-kong-1.avif" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>cordis-hong-kong-1.avif</code></div>
+    <div class="size">56.7 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://www.cordishotels.com/content/dam/cordishotels/dynamicmedia/asia/cordis_hong_kong_cdhkg/mastheads/CDHKG_cordis_weddings_header.jpg" target="_blank">https://www.cordishotels.com/content/dam/cordishotels/dynamicmedia/asia/cordi...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./cordis-hong-kong-2.jpg" target="_blank"><img src="./cordis-hong-kong-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>cordis-hong-kong-2.jpg</code></div>
+    <div class="size">2.94 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/2016%20-%20Langham%20Place%20Office%20Tower%20Skyscraper%20%E6%9C%97%E8%B1%AA%E5%9D%8A%2C%20Hong%20Kong%20(Ank%20Kumar)%2002.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/2016%20-%20Langham%20Plac...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./cordis-hong-kong-2.JPG" target="_blank"><img src="./cordis-hong-kong-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>cordis-hong-kong-2.JPG</code></div>
+    <div class="size">2.94 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">hyatt-regency-tsim-sha-tsui</td><td class="vname" rowspan="4">Hyatt Regency Hong Kong, Tsim Sha Tsui<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./hyatt-regency-tsim-sha-tsui-1.jpg" target="_blank"><img src="./hyatt-regency-tsim-sha-tsui-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hyatt-regency-tsim-sha-tsui-1.jpg</code></div>
+    <div class="size">7.66 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/13-08-08-hongkong-by-RalfR-103.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/13-08-08-hongkong-by-Ralf...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hyatt-regency-tsim-sha-tsui-1.JPG" target="_blank"><img src="./hyatt-regency-tsim-sha-tsui-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hyatt-regency-tsim-sha-tsui-1.JPG</code></div>
+    <div class="size">7.66 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hyatt-regency-tsim-sha-tsui-2.jpg" target="_blank"><img src="./hyatt-regency-tsim-sha-tsui-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hyatt-regency-tsim-sha-tsui-2.jpg</code></div>
+    <div class="size">3.09 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/HK%20TST%20%E5%B0%96%E6%B2%99%E5%92%80%20Tsim%20Sha%20Tsui%20%E6%B2%B3%E5%85%A7%E9%81%93%2018%20Hanoi%20Road%20K11%20the%20Masterpiece%20Hyatt%20Regency%20Hong%20Kong%20Hotel%20September%202020%20SS2%2006.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/HK%20TST%20%E5%B0%96%E6%B...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hyatt-regency-tsim-sha-tsui-2.JPG" target="_blank"><img src="./hyatt-regency-tsim-sha-tsui-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hyatt-regency-tsim-sha-tsui-2.JPG</code></div>
+    <div class="size">3.09 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">the-royal-garden</td><td class="vname" rowspan="4">The Royal Garden<br/><small>Yau Tsim Mong</small></td>
+  <td class="photo"><a href="./the-royal-garden-1.jpg" target="_blank"><img src="./the-royal-garden-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-royal-garden-1.jpg</code></div>
+    <div class="size">518.8 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-royal-garden-1.JPG" target="_blank"><img src="./the-royal-garden-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-royal-garden-1.JPG</code></div>
+    <div class="size">518.8 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-royal-garden-2.jpg" target="_blank"><img src="./the-royal-garden-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-royal-garden-2.jpg</code></div>
+    <div class="size">285.1 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-royal-garden-2.JPG" target="_blank"><img src="./the-royal-garden-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-royal-garden-2.JPG</code></div>
+    <div class="size">285.1 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">royal-hong-kong-yacht-club</td><td class="vname" rowspan="4">Royal Hong Kong Yacht Club (Kellett Island)<br/><small>Wan Chai</small></td>
+  <td class="photo"><a href="./royal-hong-kong-yacht-club-1.jpg" target="_blank"><img src="./royal-hong-kong-yacht-club-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>royal-hong-kong-yacht-club-1.jpg</code></div>
+    <div class="size">216.4 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./royal-hong-kong-yacht-club-1.JPG" target="_blank"><img src="./royal-hong-kong-yacht-club-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>royal-hong-kong-yacht-club-1.JPG</code></div>
+    <div class="size">216.4 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./royal-hong-kong-yacht-club-2.jpg" target="_blank"><img src="./royal-hong-kong-yacht-club-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>royal-hong-kong-yacht-club-2.jpg</code></div>
+    <div class="size">292.5 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./royal-hong-kong-yacht-club-2.JPG" target="_blank"><img src="./royal-hong-kong-yacht-club-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>royal-hong-kong-yacht-club-2.JPG</code></div>
+    <div class="size">292.5 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">aberdeen-marina-club</td><td class="vname" rowspan="4">Aberdeen Marina Club<br/><small>Southern</small></td>
+  <td class="photo"><a href="./aberdeen-marina-club-1.jpg" target="_blank"><img src="./aberdeen-marina-club-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>aberdeen-marina-club-1.jpg</code></div>
+    <div class="size">14.17 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./aberdeen-marina-club-1.JPG" target="_blank"><img src="./aberdeen-marina-club-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>aberdeen-marina-club-1.JPG</code></div>
+    <div class="size">14.17 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./aberdeen-marina-club-2.jpg" target="_blank"><img src="./aberdeen-marina-club-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>aberdeen-marina-club-2.jpg</code></div>
+    <div class="size">2.45 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./aberdeen-marina-club-2.JPG" target="_blank"><img src="./aberdeen-marina-club-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>aberdeen-marina-club-2.JPG</code></div>
+    <div class="size">2.45 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">hebe-haven-yacht-club</td><td class="vname" rowspan="4">Hebe Haven Yacht Club<br/><small>Sai Kung</small></td>
+  <td class="photo"><a href="./hebe-haven-yacht-club-1.jpg" target="_blank"><img src="./hebe-haven-yacht-club-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hebe-haven-yacht-club-1.jpg</code></div>
+    <div class="size">114.7 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://gallery.hhychk.com/2025/03/Hebe-Haven-dragonGold.jpg" target="_blank">https://gallery.hhychk.com/2025/03/Hebe-Haven-dragonGold.jpg</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hebe-haven-yacht-club-1.JPG" target="_blank"><img src="./hebe-haven-yacht-club-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hebe-haven-yacht-club-1.JPG</code></div>
+    <div class="size">114.7 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hebe-haven-yacht-club-2.jpg" target="_blank"><img src="./hebe-haven-yacht-club-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hebe-haven-yacht-club-2.jpg</code></div>
+    <div class="size">248.1 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://gallery.hhychk.com/wp/Steering-the-course_women_sailing_2026_v11.jpg" target="_blank">https://gallery.hhychk.com/wp/Steering-the-course_women_sailing_2026_v11.jpg</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./hebe-haven-yacht-club-2.JPG" target="_blank"><img src="./hebe-haven-yacht-club-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>hebe-haven-yacht-club-2.JPG</code></div>
+    <div class="size">248.1 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">tai-kwun-the-rooms</td><td class="vname" rowspan="4">Tai Kwun — The Rooms<br/><small>Central &amp; Western</small></td>
+  <td class="photo"><a href="./tai-kwun-the-rooms-1.jpg" target="_blank"><img src="./tai-kwun-the-rooms-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>tai-kwun-the-rooms-1.jpg</code></div>
+    <div class="size">3.30 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Kwun%20Duplex%20Studio%20201806.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Kwun%20Duplex%20Stu...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./tai-kwun-the-rooms-1.JPG" target="_blank"><img src="./tai-kwun-the-rooms-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>tai-kwun-the-rooms-1.JPG</code></div>
+    <div class="size">3.30 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./tai-kwun-the-rooms-2.jpg" target="_blank"><img src="./tai-kwun-the-rooms-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>tai-kwun-the-rooms-2.jpg</code></div>
+    <div class="size">3.22 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Kwun%20B%20Hall%20201806.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Kwun%20B%20Hall%202...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./tai-kwun-the-rooms-2.JPG" target="_blank"><img src="./tai-kwun-the-rooms-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>tai-kwun-the-rooms-2.JPG</code></div>
+    <div class="size">3.22 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">haw-par-mansion</td><td class="vname" rowspan="4">Haw Par Mansion<br/><small>Wan Chai</small></td>
+  <td class="photo"><a href="./haw-par-mansion-1.jpg" target="_blank"><img src="./haw-par-mansion-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>haw-par-mansion-1.jpg</code></div>
+    <div class="size">199.4 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Haw%20Par%20Mansion%2C%20circa%201964%20(48424895966).jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Haw%20Par%20Mansion%2C%20...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./haw-par-mansion-1.JPG" target="_blank"><img src="./haw-par-mansion-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>haw-par-mansion-1.JPG</code></div>
+    <div class="size">199.4 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./haw-par-mansion-2.jpg" target="_blank"><img src="./haw-par-mansion-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>haw-par-mansion-2.jpg</code></div>
+    <div class="size">30.48 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Haw%20Par%20Mansion%2C%20Hong%20Kong%20stock%20set.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Haw%20Par%20Mansion%2C%20...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./haw-par-mansion-2.JPG" target="_blank"><img src="./haw-par-mansion-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>haw-par-mansion-2.JPG</code></div>
+    <div class="size">30.48 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">flagstaff-house-tea-ware</td><td class="vname" rowspan="4">Flagstaff House Museum of Tea Ware<br/><small>Central &amp; Western</small></td>
+  <td class="photo"><a href="./flagstaff-house-tea-ware-1.jpg" target="_blank"><img src="./flagstaff-house-tea-ware-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>flagstaff-house-tea-ware-1.jpg</code></div>
+    <div class="size">1.78 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Flagstaff%20House%20Museum%20of%20Tea%20ware%20Interior%202012.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Flagstaff%20House%20Museu...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./flagstaff-house-tea-ware-1.JPG" target="_blank"><img src="./flagstaff-house-tea-ware-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>flagstaff-house-tea-ware-1.JPG</code></div>
+    <div class="size">1.78 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./flagstaff-house-tea-ware-2.jpg" target="_blank"><img src="./flagstaff-house-tea-ware-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>flagstaff-house-tea-ware-2.jpg</code></div>
+    <div class="size">763.8 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Flagstaff%20Hse%20Museum%20of%20Tea%20ware%2060401%2022.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Flagstaff%20Hse%20Museum%...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./flagstaff-house-tea-ware-2.JPG" target="_blank"><img src="./flagstaff-house-tea-ware-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>flagstaff-house-tea-ware-2.JPG</code></div>
+    <div class="size">763.8 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">jao-tsung-i-academy</td><td class="vname" rowspan="4">Jao Tsung-I Academy<br/><small>Sham Shui Po</small></td>
+  <td class="photo"><a href="./jao-tsung-i-academy-1.jpg" target="_blank"><img src="./jao-tsung-i-academy-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>jao-tsung-i-academy-1.jpg</code></div>
+    <div class="size">3.33 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Jao%20Tsung-I%20Academy%20(Hong%20Kong).jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Jao%20Tsung-I%20Academy%2...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./jao-tsung-i-academy-1.JPG" target="_blank"><img src="./jao-tsung-i-academy-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>jao-tsung-i-academy-1.JPG</code></div>
+    <div class="size">3.33 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./jao-tsung-i-academy-2.jpg" target="_blank"><img src="./jao-tsung-i-academy-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>jao-tsung-i-academy-2.jpg</code></div>
+    <div class="size">2.95 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Jao%20Tsung-I%20Academy%2C%20Lai%20Chi%20Kok%20(Hong%20Kong).jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Jao%20Tsung-I%20Academy%2...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./jao-tsung-i-academy-2.JPG" target="_blank"><img src="./jao-tsung-i-academy-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>jao-tsung-i-academy-2.JPG</code></div>
+    <div class="size">2.95 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">bethanie-chapel</td><td class="vname" rowspan="4">Béthanie Chapel<br/><small>Southern</small></td>
+  <td class="photo"><a href="./bethanie-chapel-1.jpg" target="_blank"><img src="./bethanie-chapel-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>bethanie-chapel-1.jpg</code></div>
+    <div class="size">772.4 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Chapel%2C%20B%C3%A9thanie%2C%20Hong%20Kong%20(2007-08-31).jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Chapel%2C%20B%C3%A9thanie...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./bethanie-chapel-1.JPG" target="_blank"><img src="./bethanie-chapel-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>bethanie-chapel-1.JPG</code></div>
+    <div class="size">772.4 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./bethanie-chapel-2.jpg" target="_blank"><img src="./bethanie-chapel-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>bethanie-chapel-2.jpg</code></div>
+    <div class="size">723.7 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Ceiling%20of%20the%20chapel%2C%20B%C3%A9thanie%2C%20Hong%20Kong%20(2007-08-31).jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Ceiling%20of%20the%20chap...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./bethanie-chapel-2.JPG" target="_blank"><img src="./bethanie-chapel-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>bethanie-chapel-2.JPG</code></div>
+    <div class="size">723.7 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">the-lake-house</td><td class="vname" rowspan="4">The Lake House<br/><small>Tai Po</small></td>
+  <td class="photo"><a href="./the-lake-house-1.jpg" target="_blank"><img src="./the-lake-house-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-lake-house-1.jpg</code></div>
+    <div class="size">644.8 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Lake%20Silver%20Lake%20Sapphire.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Lake%20Silver%20Lake%20Sa...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-lake-house-1.JPG" target="_blank"><img src="./the-lake-house-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-lake-house-1.JPG</code></div>
+    <div class="size">644.8 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-lake-house-2.jpg" target="_blank"><img src="./the-lake-house-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-lake-house-2.jpg</code></div>
+    <div class="size">695.8 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Lake%20Silver%20Palace%20by%20the%20Sea.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Lake%20Silver%20Palace%20...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-lake-house-2.JPG" target="_blank"><img src="./the-lake-house-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-lake-house-2.JPG</code></div>
+    <div class="size">695.8 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="no-photo">
+  <td class="vid">crown-wine-cellars</td>
+  <td class="vname">Crown Wine Cellars<br/><small>Southern</small></td>
+  <td colspan="2" class="empty">No local photos — falls back to stylized icon hero. Add to OFFICIAL_PAGES or OVERRIDE_IMAGES in scripts/fetch-venue-photos.ts and re-run.</td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">the-grassland-clear-water-bay</td><td class="vname" rowspan="4">The Grassland<br/><small>Sai Kung</small></td>
+  <td class="photo"><a href="./the-grassland-clear-water-bay-1.jpg" target="_blank"><img src="./the-grassland-clear-water-bay-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-grassland-clear-water-bay-1.jpg</code></div>
+    <div class="size">1.12 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/HK%20Lantau%20Island%20%E6%AC%A3%E6%BE%B3%E9%81%93%20Sunny%20Bay%20Road%2020070616-08.JPG" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/HK%20Lantau%20Island%20%E...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-grassland-clear-water-bay-1.JPG" target="_blank"><img src="./the-grassland-clear-water-bay-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-grassland-clear-water-bay-1.JPG</code></div>
+    <div class="size">1.12 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-grassland-clear-water-bay-2.jpg" target="_blank"><img src="./the-grassland-clear-water-bay-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-grassland-clear-water-bay-2.jpg</code></div>
+    <div class="size">1.16 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/HK%20Lantau%20Island%20%E6%AC%A3%E6%BE%B3%E9%81%93%20Sunny%20Bay%20Road%2020070616-04%20Government%20Land%20wire%20netting%20grass%20land.JPG" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/HK%20Lantau%20Island%20%E...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-grassland-clear-water-bay-2.JPG" target="_blank"><img src="./the-grassland-clear-water-bay-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-grassland-clear-water-bay-2.JPG</code></div>
+    <div class="size">1.16 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="no-photo">
+  <td class="vid">wooden-fairies</td>
+  <td class="vname">Wooden Fairies<br/><small>Sai Kung</small></td>
+  <td colspan="2" class="empty">No local photos — falls back to stylized icon hero. Add to OFFICIAL_PAGES or OVERRIDE_IMAGES in scripts/fetch-venue-photos.ts and re-run.</td>
+</tr>
+
+<tr class="no-photo">
+  <td class="vid">one-thirty-one</td>
+  <td class="vname">One-ThirtyOne<br/><small>Sai Kung</small></td>
+  <td colspan="2" class="empty">No local photos — falls back to stylized icon hero. Add to OFFICIAL_PAGES or OVERRIDE_IMAGES in scripts/fetch-venue-photos.ts and re-run.</td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">beas-river-country-club</td><td class="vname" rowspan="4">Beas River Country Club<br/><small>North</small></td>
+  <td class="photo"><a href="./beas-river-country-club-1.jpg" target="_blank"><img src="./beas-river-country-club-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>beas-river-country-club-1.jpg</code></div>
+    <div class="size">8.77 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/HK%20ND%20%E5%8C%97%E5%8D%80%20North%20District%20%E4%B8%8A%E6%B0%B4%20Sheung%20Shui%20%E9%9B%99%E9%AD%9A%E6%B2%B3%E9%84%89%E6%9D%91%E6%9C%83%E6%89%80%20Beas%20River%20Country%20Club%20%E9%A6%99%E6%B8%AF%E8%B3%BD%E9%A6%AC%E6%9C%83%20HKJC%20Hong%20Kong%20Jockey%20Club%20outdoors%20September%202022%20Px3%2084.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/HK%20ND%20%E5%8C%97%E5%8D...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./beas-river-country-club-1.JPG" target="_blank"><img src="./beas-river-country-club-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>beas-river-country-club-1.JPG</code></div>
+    <div class="size">8.77 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./beas-river-country-club-2.jpg" target="_blank"><img src="./beas-river-country-club-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>beas-river-country-club-2.jpg</code></div>
+    <div class="size">7.42 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/HK%20ND%20%E5%8C%97%E5%8D%80%20North%20District%20%E4%B8%8A%E6%B0%B4%20Sheung%20Shui%20%E9%9B%99%E9%AD%9A%E6%B2%B3%E9%84%89%E6%9D%91%E6%9C%83%E6%89%80%20Beas%20River%20Country%20Club%20%E9%A6%99%E6%B8%AF%E8%B3%BD%E9%A6%AC%E6%9C%83%20HKJC%20Hong%20Kong%20Jockey%20Club%20outdoors%20September%202022%20Px3%2089.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/HK%20ND%20%E5%8C%97%E5%8D...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./beas-river-country-club-2.JPG" target="_blank"><img src="./beas-river-country-club-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>beas-river-country-club-2.JPG</code></div>
+    <div class="size">7.42 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">tai-o-heritage-hotel</td><td class="vname" rowspan="4">Tai O Heritage Hotel<br/><small>Islands</small></td>
+  <td class="photo"><a href="./tai-o-heritage-hotel-1.jpg" target="_blank"><img src="./tai-o-heritage-hotel-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>tai-o-heritage-hotel-1.jpg</code></div>
+    <div class="size">1.96 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20O%20Heritage%20Hotel%2C%20Room%201120%20Treasure%20Pond%20(Hong%20Kong).JPG" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20O%20Heritage%20Hote...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./tai-o-heritage-hotel-1.JPG" target="_blank"><img src="./tai-o-heritage-hotel-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>tai-o-heritage-hotel-1.JPG</code></div>
+    <div class="size">1.96 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./tai-o-heritage-hotel-2.jpg" target="_blank"><img src="./tai-o-heritage-hotel-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>tai-o-heritage-hotel-2.jpg</code></div>
+    <div class="size">1.99 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20O%20Heritage%20Hotel%2C%20Tai%20O%20Lookout%20(Hong%20Kong).jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20O%20Heritage%20Hote...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./tai-o-heritage-hotel-2.JPG" target="_blank"><img src="./tai-o-heritage-hotel-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>tai-o-heritage-hotel-2.JPG</code></div>
+    <div class="size">1.99 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="no-photo">
+  <td class="vid">palm-beach-teepee</td>
+  <td class="vname">Palm Beach Teepee Village<br/><small>Islands</small></td>
+  <td colspan="2" class="empty">No local photos — falls back to stylized icon hero. Add to OFFICIAL_PAGES or OVERRIDE_IMAGES in scripts/fetch-venue-photos.ts and re-run.</td>
+</tr>
+
+<tr class="no-photo">
+  <td class="vid">bathers-restaurant</td>
+  <td class="vname">Bathers Restaurant &amp; Bar<br/><small>Islands</small></td>
+  <td colspan="2" class="empty">No local photos — falls back to stylized icon hero. Add to OFFICIAL_PAGES or OVERRIDE_IMAGES in scripts/fetch-venue-photos.ts and re-run.</td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">lcsd-mui-wo-beach</td><td class="vname" rowspan="4">Silvermine Bay Beach (Mui Wo)<br/><small>Islands</small></td>
+  <td class="photo"><a href="./lcsd-mui-wo-beach-1.jpg" target="_blank"><img src="./lcsd-mui-wo-beach-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-mui-wo-beach-1.jpg</code></div>
+    <div class="size">4.92 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Silver%20Mine%20Bay%20Beach.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Silver%20Mine%20Bay%20Bea...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-mui-wo-beach-1.JPG" target="_blank"><img src="./lcsd-mui-wo-beach-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-mui-wo-beach-1.JPG</code></div>
+    <div class="size">4.92 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-mui-wo-beach-2.jpg" target="_blank"><img src="./lcsd-mui-wo-beach-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-mui-wo-beach-2.jpg</code></div>
+    <div class="size">452.7 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Silvermine%20Bay%20(50562671737).jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Silvermine%20Bay%20(50562...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-mui-wo-beach-2.JPG" target="_blank"><img src="./lcsd-mui-wo-beach-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-mui-wo-beach-2.JPG</code></div>
+    <div class="size">452.7 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">lcsd-cheung-sha-beach</td><td class="vname" rowspan="4">Lower Cheung Sha Beach<br/><small>Islands</small></td>
+  <td class="photo"><a href="./lcsd-cheung-sha-beach-1.jpg" target="_blank"><img src="./lcsd-cheung-sha-beach-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-cheung-sha-beach-1.jpg</code></div>
+    <div class="size">1.41 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/HK%20Lantau%20Island%20Cheung%20Sha.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/HK%20Lantau%20Island%20Ch...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-cheung-sha-beach-1.JPG" target="_blank"><img src="./lcsd-cheung-sha-beach-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-cheung-sha-beach-1.JPG</code></div>
+    <div class="size">1.41 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-cheung-sha-beach-2.jpg" target="_blank"><img src="./lcsd-cheung-sha-beach-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-cheung-sha-beach-2.jpg</code></div>
+    <div class="size">94.6 KB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Lantau%20beach.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Lantau%20beach.jpg</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./lcsd-cheung-sha-beach-2.JPG" target="_blank"><img src="./lcsd-cheung-sha-beach-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>lcsd-cheung-sha-beach-2.JPG</code></div>
+    <div class="size">94.6 KB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  <td class="vid" rowspan="4">the-dragon-garden</td><td class="vname" rowspan="4">The Dragon Garden<br/><small>Tsuen Wan</small></td>
+  <td class="photo"><a href="./the-dragon-garden-1.jpg" target="_blank"><img src="./the-dragon-garden-1.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-dragon-garden-1.jpg</code></div>
+    <div class="size">3.14 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Hong%20Kong%20(2017)%20-%20131.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Hong%20Kong%20(2017)%20-%...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-dragon-garden-1.JPG" target="_blank"><img src="./the-dragon-garden-1.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-dragon-garden-1.JPG</code></div>
+    <div class="size">3.14 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-dragon-garden-2.jpg" target="_blank"><img src="./the-dragon-garden-2.jpg" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-dragon-garden-2.jpg</code></div>
+    <div class="size">3.52 MB</div>
+    <div class="src"><strong>Source:</strong> <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Dragon%20Road%20Garden%202024.jpg" target="_blank">https://commons.wikimedia.org/wiki/Special:FilePath/Dragon%20Road%20Garden%20...</a></div>
+    
+    
+  </td>
+</tr>
+
+<tr class="">
+  
+  <td class="photo"><a href="./the-dragon-garden-2.JPG" target="_blank"><img src="./the-dragon-garden-2.JPG" loading="lazy" /></a></td>
+  <td class="meta">
+    <div class="fname"><code>the-dragon-garden-2.JPG</code></div>
+    <div class="size">3.52 MB</div>
+    <div class="src no-src">(no manifest entry — was scraped before manifest tracking)</div>
+    <div class="flags"><span class="flag">ℹ no source URL recorded (pre-manifest scrape)</span></div>
+    
+  </td>
+</tr>
+  </tbody>
+</table>

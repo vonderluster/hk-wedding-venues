@@ -61,6 +61,9 @@ jobs:
             npx tsx scripts/fetch-venue-photos.ts
           fi
 
+      - name: Regenerate venue-lines.json (line numbers shift when photos are added)
+        run: npx tsx scripts/build-venue-lines.ts
+
       - name: Typecheck (safety gate — never push a broken venues.ts)
         run: npx tsc -b
 
@@ -68,7 +71,7 @@ jobs:
         id: changes
         run: |
           set -euo pipefail
-          git add public/venue-photos/ src/data/venues.ts
+          git add public/venue-photos/ src/data/venues.ts src/data/venue-lines.json
           if git diff --cached --quiet; then
             echo "has_changes=false" >> "$GITHUB_OUTPUT"
             echo "✓ No new photos this run."
