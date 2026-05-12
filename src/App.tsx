@@ -820,6 +820,22 @@ function VenueDetails({
                     Enquire Now ↗
                   </a>
                 )}
+                {/* Maintainer edit link — visible to everyone but only useful
+                    if you have write access to the repo. Opens GitHub code
+                    search for `id: "<venue-id>"` so the right line in
+                    venues.ts is one click away.  */}
+                <a
+                  href={`https://github.com/search?q=repo%3Avonderluster%2Fhk-wedding-venues+%22id%3A+%5C%22${encodeURIComponent(
+                    venue.id,
+                  )}%5C%22%22&type=code`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block text-center text-[11px] text-slate-400 hover:text-slate-600 transition pt-1"
+                  aria-label={`Edit ${venue.name} entry on GitHub`}
+                  title={`Open venues.ts on GitHub at the ${venue.id} entry`}
+                >
+                  ✎ Edit this venue on GitHub
+                </a>
               </div>
             </div>
 
