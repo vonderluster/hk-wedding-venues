@@ -3549,7 +3549,13 @@ export const venues: Venue[] = [
     rating: 4.7,
     reviewCount: 165,
     dietaryOptions: ["Vegetarian", "Vegan", "Gluten-free", "Nut-free"],
-    images: [],
+    images: [
+      {
+        url: "/venue-photos/one-thirty-one-1.png",
+        kind: "exterior",
+        caption: "One-ThirtyOne",
+      },
+    ],
     blurb:
       "Three-storey Mediterranean villa opening onto lush lawns at Three Fathoms Cove, Sai Kung. Indoor dining rooms, garden ceremony lawn, and a roof terrace looking out over the cove. Boutique scale — best for 40–140 guests; full villa buyout available. (Not listed on hkwvdb.com — details unverified.)",
     reviews: [],
