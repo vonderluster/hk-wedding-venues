@@ -3,11 +3,15 @@
  *
  * For each venue in src/data/venues.ts, this script tries candidate sources
  * in priority order:
- *   1. Hand-picked Wikimedia Commons filenames (defined below in HAND_PICKED).
+ *   1. Explicit URL overrides (OVERRIDE_IMAGES) — hand-picked known-good URLs.
  *   2. Hand-picked official wedding/event pages scraped for og:image and
  *      hero gallery <img>/data-src/CSS background-image URLs (OFFICIAL_PAGES).
  *      Falls back to the venue.enquiryUrl if no curated page is provided.
- *   3. Wikimedia / lcsd / official URLs already present in venue.images[].
+ *   3. Hand-picked Wikimedia Commons filenames (HAND_PICKED).
+ *   4. Wikimedia / lcsd / official URLs already present in venue.images[].
+ *   5. Wikimedia Commons API search for "<venue name> Hong Kong" — auto
+ *      safety net that catches well-known heritage sites, beaches, and
+ *      landmarks without needing per-venue configuration.
  *
  * Each successful download is saved as `public/venue-photos/<venue-id>-1.jpg`
  * (or .png/.webp based on content-type). Up to MAX_PER_VENUE per venue.
@@ -433,6 +437,36 @@ function priorityScore(url: string): number {
   );
 }
 
+/** Search Wikimedia Commons for image files matching a query. Returns
+ *  Special:FilePath URLs ready to download. No auth required. */
+async function wikimediaSearch(query: string): Promise<string[]> {
+  const apiUrl =
+    "https://commons.wikimedia.org/w/api.php" +
+    "?action=query&format=json&list=search" +
+    "&srnamespace=6" + // namespace 6 = File:
+    `&srsearch=${encodeURIComponent(query)}` +
+    "&srlimit=8&origin=*";
+  try {
+    const res = await fetch(apiUrl, {
+      headers: { "User-Agent": USER_AGENT },
+    });
+    if (!res.ok) return [];
+    const json = (await res.json()) as {
+      query?: { search?: Array<{ title?: string }> };
+    };
+    const titles = json?.query?.search ?? [];
+    return titles
+      .map((r) => r.title ?? "")
+      .filter((t) => /\.(jpe?g|png|webp|avif)$/i.test(t))
+      .map((t) => {
+        const filename = t.replace(/^File:/, "");
+        return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(filename)}`;
+      });
+  } catch {
+    return [];
+  }
+}
+
 /** Fetch an HTML page and pull every plausible photo URL out of it. */
 async function scrapeImagesFromPage(
   pageUrl: string,
@@ -598,8 +632,26 @@ async function downloadVenue(
         !u.startsWith("/"),
     );
 
+  // 5. Wikimedia Commons API search (last resort — catches venues without
+  //    hand-picked entries, by searching for "<venue name> Hong Kong").
+  let wikimediaResults: string[] = [];
+  if (!skipScrape) {
+    const query = `${venue.name} Hong Kong`;
+    console.log(`  [wiki-search] ${venueId} ← "${query}"`);
+    wikimediaResults = await wikimediaSearch(query);
+    if (wikimediaResults.length > 0) {
+      console.log(`    found ${wikimediaResults.length} candidates on Wikimedia`);
+    }
+  }
+
   const candidates = Array.from(
-    new Set([...overrides, ...scrapedUrls, ...handPicked, ...existingExternal]),
+    new Set([
+      ...overrides,
+      ...scrapedUrls,
+      ...handPicked,
+      ...existingExternal,
+      ...wikimediaResults,
+    ]),
   ).filter((u) => looksLikeRealPhoto(u, venueId));
 
   if (candidates.length === 0) {
