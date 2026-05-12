@@ -43,8 +43,16 @@ const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, "..");
 const PHOTOS_DIR = path.join(ROOT, "public", "venue-photos");
 const VENUES_FILE = path.join(ROOT, "src", "data", "venues.ts");
+/** Tracks which source URL each saved photo came from. Persisted to
+ *  public/venue-photos/_manifest.json so you can audit what the scraper
+ *  picked and add bad patterns to BLOCKED_URL_PATTERNS. */
+const MANIFEST_FILE = path.join(PHOTOS_DIR, "_manifest.json");
+type Manifest = Record<string, { url: string; bytes: number; ts: string }>;
 const MAX_PER_VENUE = 2;
-const MIN_VALID_BYTES = 10_000;
+// Real venue hero photos are essentially always >50 KB. Floor-plan diagrams,
+// logos, and small thumbnails tend to be <30 KB. Setting the threshold at
+// 50 KB filters most of the obvious junk without losing legitimate photos.
+const MIN_VALID_BYTES = 50_000;
 const USER_AGENT =
   "hk-wedding-venues/1.0 (https://github.com/vonderluster/hk-wedding-venues; yyychanhk@gmail.com)";
 /** Browser-like UA for marketing sites that block project / curl-style UAs. */
@@ -310,9 +318,11 @@ function absoluteUrl(pageUrl: string, ref: string): string | null {
 }
 
 /** Heuristic: skip URLs that are likely logos / icons / placeholders / pixel
- *  trackers, and require an image-ish file extension. */
+ *  trackers / event posters / floor-plan diagrams, and require an image-ish
+ *  file extension. */
 const IMG_EXT_RE = /\.(jpe?g|png|webp|avif)(\?|$|#)/i;
 const SKIP_HINTS = [
+  // UI furniture
   "logo",
   "favicon",
   "sprite",
@@ -326,12 +336,81 @@ const SKIP_HINTS = [
   "/icons/",
   "social",
   "/avatar",
+  // Event posters / flyers / marketing collateral (NOT what we want as hero)
+  "poster",
+  "flyer",
+  "campaign",
+  "fundraiser",
+  "charity",
+  "promo-",
+  "newsletter",
+  "press-release",
+  // Floor-plan diagrams and capacity charts (cropped up in Ritz-Carlton scrape)
+  "floorplan",
+  "floor-plan",
+  "floor_plan",
+  "seating-chart",
+  "seating_chart",
+  "diagram",
+  "schematic",
+  "layout-",
+  "_layout",
+  "/layout/",
+  "capacity-chart",
+  // Generic thumbnails
+  "thumb-",
+  "/thumb/",
+  "_thumb",
+  "-150x",
+  "-200x",
+  "-300x",
 ];
-function looksLikeRealPhoto(url: string): boolean {
+function looksLikeRealPhoto(url: string, venueId?: string): boolean {
   if (!IMG_EXT_RE.test(url)) return false;
   const lower = url.toLowerCase();
-  return !SKIP_HINTS.some((h) => lower.includes(h));
+  if (SKIP_HINTS.some((h) => lower.includes(h))) return false;
+  // Per-venue denylist for stubborn cases (event posters from a particular
+  // hotel's news feed, etc.). Add patterns under BLOCKED_URL_PATTERNS below.
+  if (venueId) {
+    const blocked = BLOCKED_URL_PATTERNS[venueId];
+    if (blocked && blocked.some((p) => lower.includes(p.toLowerCase()))) {
+      return false;
+    }
+  }
+  return true;
 }
+
+/** Per-venue URL substrings to block during scraping. Use when a venue's
+ *  official site keeps offering the same wrong image (e.g. a recurring event
+ *  poster on a yacht club's news feed). Add the offending word(s) here and
+ *  re-run the scraper for that venue. */
+const BLOCKED_URL_PATTERNS: Record<string, string[]> = {
+  // Hebe Haven Yacht Club's official Facebook feed promotes the annual
+  // 24-hour charity dinghy race; the scraper kept picking the event poster
+  // over actual clubhouse photos.
+  "hebe-haven-yacht-club": ["dinghy", "race", "regatta", "24-hour", "24hour"],
+  // Ritz-Carlton's wedding page leads with table-layout diagrams.
+  "ritz-carlton-hong-kong": [
+    "floorplan",
+    "floor-plan",
+    "layout",
+    "table-setup",
+    "seating",
+  ],
+};
+
+/** Explicit URL overrides per venue — tried BEFORE any scraping. Use this
+ *  when you have a specific known-good photo URL (from the venue's media kit,
+ *  a press article, a Wikimedia file, etc.) that should be the hero photo.
+ *  The scraper still attempts these with the same content-type + min-size
+ *  validation, so a bad URL here won't break anything. */
+const OVERRIDE_IMAGES: Record<string, string[]> = {
+  // Add entries like:
+  //   "venue-id": [
+  //     "https://example.com/path/to/hero.jpg",
+  //     "https://example.com/path/to/ballroom.jpg",
+  //   ],
+};
 
 /** Bonus score for URLs that hint at the kind of image we want as a hero. */
 const PRIORITY_HINTS = [
@@ -355,7 +434,10 @@ function priorityScore(url: string): number {
 }
 
 /** Fetch an HTML page and pull every plausible photo URL out of it. */
-async function scrapeImagesFromPage(pageUrl: string): Promise<string[]> {
+async function scrapeImagesFromPage(
+  pageUrl: string,
+  venueId?: string,
+): Promise<string[]> {
   let html: string;
   try {
     const res = await fetch(pageUrl, {
@@ -430,14 +512,33 @@ async function scrapeImagesFromPage(pageUrl: string): Promise<string[]> {
   }
 
   // Filter, dedupe, and sort by priority score (higher hints first).
-  const filtered = Array.from(new Set(found.filter(looksLikeRealPhoto)));
+  const filtered = Array.from(
+    new Set(found.filter((u) => looksLikeRealPhoto(u, venueId))),
+  );
   filtered.sort((a, b) => priorityScore(b) - priorityScore(a));
   return filtered;
+}
+
+async function loadManifest(): Promise<Manifest> {
+  try {
+    const raw = await fs.readFile(MANIFEST_FILE, "utf8");
+    return JSON.parse(raw) as Manifest;
+  } catch {
+    return {};
+  }
+}
+
+async function saveManifest(m: Manifest): Promise<void> {
+  // Sort keys for stable diffs in git.
+  const sorted: Manifest = {};
+  for (const k of Object.keys(m).sort()) sorted[k] = m[k];
+  await fs.writeFile(MANIFEST_FILE, JSON.stringify(sorted, null, 2) + "\n");
 }
 
 async function downloadVenue(
   venueId: string,
   skipScrape: boolean,
+  manifest: Manifest,
 ): Promise<string[]> {
   const venue = venues.find((v) => v.id === venueId);
   if (!venue) {
@@ -463,24 +564,27 @@ async function downloadVenue(
     return out;
   }
 
-  // 1. Scrape official wedding pages (highest priority — hotel-curated, high-res).
+  // 1. Explicit overrides (highest priority — hand-picked known-good URLs).
+  const overrides = OVERRIDE_IMAGES[venueId] ?? [];
+
+  // 2. Scrape official wedding pages (hotel-curated, high-res).
   const scrapedUrls: string[] = [];
   if (!skipScrape) {
     const pages = OFFICIAL_PAGES[venueId] ?? [];
     if (pages.length === 0 && venue.enquiryUrl) pages.push(venue.enquiryUrl);
     for (const page of pages) {
       console.log(`  [scrape] ${venueId} ← ${page}`);
-      const imgs = await scrapeImagesFromPage(page);
+      const imgs = await scrapeImagesFromPage(page, venueId);
       if (imgs.length > 0) {
         scrapedUrls.push(...imgs.slice(0, 5)); // cap per page so we don't try 100 URLs
       }
     }
   }
 
-  // 2. Hand-picked Wikimedia Commons filenames.
+  // 3. Hand-picked Wikimedia Commons filenames.
   const handPicked = (HAND_PICKED[venueId] ?? []).map(toFilePathUrl);
 
-  // 3. Wikimedia / LCSD / official URLs already in the venue.images array.
+  // 4. Wikimedia / LCSD / official URLs already in the venue.images array.
   const existingExternal = venue.images
     .map((img) => img.url)
     .filter(
@@ -495,8 +599,8 @@ async function downloadVenue(
     );
 
   const candidates = Array.from(
-    new Set([...scrapedUrls, ...handPicked, ...existingExternal]),
-  );
+    new Set([...overrides, ...scrapedUrls, ...handPicked, ...existingExternal]),
+  ).filter((u) => looksLikeRealPhoto(u, venueId));
 
   if (candidates.length === 0) {
     console.log(`  [no-candidates] ${venueId}`);
@@ -520,7 +624,13 @@ async function downloadVenue(
     const r = await tryDownload(url, idBase);
     if (r.ok && r.path) {
       console.log(`OK (${(r.bytes! / 1024).toFixed(1)} KB, .${r.ext})`);
-      writtenPaths.push(`/venue-photos/${path.basename(r.path)}`);
+      const rel = `/venue-photos/${path.basename(r.path)}`;
+      writtenPaths.push(rel);
+      manifest[rel] = {
+        url,
+        bytes: r.bytes!,
+        ts: new Date().toISOString(),
+      };
       slot++;
     } else {
       console.log(`fail (${r.error})`);
@@ -604,13 +714,15 @@ async function main() {
     `\nfetch-venue-photos: ${targetVenues.length} venues, mode=${mode}${skipScrape ? ", skip-scrape" : ""}\n`,
   );
 
+  const manifest = await loadManifest();
   const localPathsByVenue: Record<string, string[]> = {};
 
   if (mode !== "rewrite") {
     for (const v of targetVenues) {
-      const paths = await downloadVenue(v.id, skipScrape);
+      const paths = await downloadVenue(v.id, skipScrape, manifest);
       if (paths.length > 0) localPathsByVenue[v.id] = paths;
     }
+    await saveManifest(manifest);
     const okCount = Object.values(localPathsByVenue).filter(
       (p) => p.length > 0,
     ).length;
